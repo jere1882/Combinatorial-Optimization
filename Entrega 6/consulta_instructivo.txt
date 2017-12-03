@@ -1,0 +1,61 @@
+CÓMO SEGUIR CON LA P6
+
+10 B
+
+1- Reescribir y rechequear el enunciado. Ver si corresponde con las correcciones q hizo
+Daniel
+
+2- Usando el ej anterior! 
+
+El algoritmo responde SI  <=> Hay un camino prohibido tq ...
+
+
+=> 
+
+Hay dos lugares desde donde pudo haber respondido si. para cada uno de esos lugares
+mostrar cual es el camino
+
+
+<=
+
+Supongo q hay un camino prohibido P
+tal vez me puedo quedar con el primer pedacito, un camino de 2
+muestro que el algoritmo respondería sí al menos para esa combinación de J y J
+
+
+11 e iv: a mano, terminar de chequear que eso esté bien
+
+11 f
+
+i)  Acotar por debajo con 6 puntos AI, sacando el 4 o el 3 por ejemplo 
+    Acordar por arriba dando 32 - 26 ecuaciones LI (es decir me armo la matriz)- ver en la formulación 
+       ideal, que ya está dada, 26 que se cumplan por igualdad y q formen una matriz triangular oa glo asi x ej
+ 	  
+
+	De ahi concluyo la igualdad =) 
+
+ii) Dos caminos. Para empezar justifico q si, es cara.
+
+
+> Agarro y veo q hay otra cara que la contiene. Por ejemplo, si x12 < x11 se cumple, también se cumple siempre
+otra cosa (tipo yvw = 1), entonces esto define otra cara q la contiene -y buscar un punto q esté en una y no en la otra-
+
+> Otra es vver que esa faceta es el mismo poliedro. es decir, probar que dim( ) /= 4. Actually, es 5 pareciera,
+porque la igualdad se puede deducir del sistema minimal.
+
+iii) Para ver qu ees una faceta, basta con ver dim( ) = 4. Agarro 5 puntos LI de la solución. Para ver q son LI puedo 
+usar el programita q me mostro él, es sólo correrlo. En unix o windows.  NO ES NECESARIO, AHI VA LA 
+SUGERENCIA, UN SUB DE AFIN IDPTE ES AFIN IDPTE Fijate en el papelq  escribió el comando.
+
+	Ahí ya acoto por un lado. Después a las ecuaciones de 11 f i, les agrego esta igualdad y debería
+seguir siendo todo LI.
+
+	Luego, ya tengo la dimensión y ya queda el ej terminado.
+
+
+
+
+Después revisá todo y ya entregá la práctica, felices lo 4.
+
+
+

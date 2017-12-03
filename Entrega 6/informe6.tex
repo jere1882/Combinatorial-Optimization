@@ -1,0 +1,542 @@
+\documentclass {article} 
+
+\usepackage{lmodern}
+\usepackage [spanish] {babel} 
+\usepackage [T1]{fontenc}
+\usepackage [latin1]{inputenc}
+\usepackage{amsthm} % para poder usar newtheorem
+\usepackage{cancel} %Para poder hacer el simbolo "no es consecuencia semántica" etc.
+\usepackage{graphicx} 
+\usepackage{amsmath} %para poder usar mathbb
+\usepackage{amsfonts} %sigo intentando usar mathbb
+\usepackage{amssymb} %therefore
+\usepackage{ mathabx } %comillas
+\usepackage{ verbatim } 
+\theoremstyle{remark}
+\usepackage[latin1]{inputenc} 
+\usepackage{listings}
+\usepackage{verbatim}
+\usepackage{hyperref}
+\usepackage{proof}
+\usepackage{anysize}
+\marginsize{3cm}{3cm}{3cm}{3cm}
+\usepackage{tikz}
+
+\usepackage{ stmaryrd }
+\usepackage{ mathrsfs }
+
+\begin{document} 
+
+
+
+\begin{titlepage}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
+
+\center % Center everything on the page
+ 
+%----------------------------------------------------------------------------------------
+%    HEADING SECTIONS
+%----------------------------------------------------------------------------------------
+
+\textsc{\Large Facultad de Ciencias Exactas, Ingeniería y Agrimensura}\\[1.5cm] % Name of your university/college
+
+\textsc{ Tópicos Avanzados en Optimización Combinatoria y Teoría de Grafos}\\[0.5cm] % Minor heading such as course title
+
+%----------------------------------------------------------------------------------------
+%    TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\HRule \\[0.4cm]
+{ \huge \bfseries PRÁCTICA 6}\\[0.4cm] % Title of your document
+TEORÍA POLIEDRAL Y RESOLUCIÓN DE MODELOS MEDIANTE PLE
+\HRule \\[1.5cm] 
+
+%----------------------------------------------------------------------------------------
+%    AUTHOR SECTION
+%----------------------------------------------------------------------------------------
+
+%\begin{minipage}{0.4\textwidth}
+%\begin{flushleft} \large
+%\emph{Autor:}\\
+%Rodríguez Jeremías % Your name
+%\end{flushleft}
+%\end{minipage}
+
+%\begin{minipage}{0.4\textwidth}
+%\begin{flushright} \large
+%\emph{Profesor:} \\
+%Mauro Jaskelioff % Supervisor's Name
+%\end{flushright}
+%\end{minipage}\\[4cm]
+
+% If you don't want a supervisor, uncomment the two lines below and remove the section above
+\Large \emph{Alumno: Rodríguez Jeremías}\\
+
+
+%----------------------------------------------------------------------------------------
+%    DATE SECTION
+%----------------------------------------------------------------------------------------
+
+{\large \today}\\[3cm] % Date, change the \today to a set date if you want to be precise
+
+%----------------------------------------------------------------------------------------
+%    LOGO SECTION
+%----------------------------------------------------------------------------------------
+
+%\includegraphics{Logo}\\[1cm] % Include a department/university logo - this will require the graphicx package
+ 
+%----------------------------------------------------------------------------------------
+
+\vfill % Fill the rest of the page with whitespace
+
+\end{titlepage}
+\section{Ejercicio 2}
+Escaneado en el .rar.
+\section{Ejercicio 3} 
+Las inecuaciones del sistema del enunciado serán referenciadas por su número (1-7).
+\subsection{Apartado A}
+Analizaré, inecuación por inecuación, si genera una ecuación implicada o no (si todos las soluciones del sistema la verifican por igualdad).
+\begin{itemize}
+\item \textbf{1} La primera claramente se verifica por igualdad, pues es una ecuación.
+\item \textbf{2 y 3} Sea $(w,x,y,z) \in P$. Como verifica la inecuación (2), tenemos que:
+\begin{center} $-2w + x - y - 3z \leq 0$ (*) \end{center}
+Además, como verifica la ecuación (3), tenemos qué:
+\begin{center} $4w - 2x + 2y + 6z  \leq 0$ \end{center}
+Dividiendo por (-2) ambos términos en la última desigualdad:
+\begin{center} $-2w + x - y - 3z  \geq 0$  (**)\end{center}
+Luego, por antisimetría de $\leq$ en (*) y (**):
+\begin{center} $-2w + x - y - 3z  = 0 = 4w - 2x + 2y + 6z$ \end{center}
+Y las inecuaciones (2) y (3) siempre se verificarán por igualdad.
+\item Las inecuaciones \textbf{4,5,6 y 7} pueden no ser verificadas por igualdad, por ejemplo considerando el punto $(\frac{3}{2},2,-4,1) \in P$. Por lo tanto, estas inecuaciones no implican ecuaciones.
+\end{itemize}
+
+Por lo tanto, el sistema de ecuaciones implicado es:\\
+
+\[   \begin{array} {ccccccccc}
+                  &   &       &    & x_3  &    &      & = & -4 \\
+            -2x_1 & - &  x_2  &  - & x_3  &  - & 3x_4 & = & 0 \\ 
+             4x_1 & + &  2x_2 &  + & 2x_3 &  + & 6x_4 & = & 0  
+\end{array}  \]
+
+\subsection{Apartado B}
+Por teorema 6.15 del libro, $dim(P) \leq 4 - rank(\bar{A})$. A continuación se calcula el rango con Gauss:
+
+\[ \bar{A} = \left( \begin{array}{cccc}
+    0  & 0 & 1  & 0  \\
+    -2 & 1 & -1 & 3  \\
+   4  & -2 & 2 & 6 
+\end{array} \right) \sim \left( \begin{array}{cccc}
+    -2 & 1 & -1 & 3  \\
+    0  & 0 & 1  & 0  \\
+   4  & -2 & 2 & 6 
+\end{array} \right) \sim \left( \begin{array}{cccc}
+    -2 & 1 & -1 & 3  \\
+    0  & 0 & 1  & 0  \\
+    0  & 0 & 0 & 0 
+\end{array} \right) \]  \\
+
+Luego, $rank(\bar{A})=2$ y 
+
+\begin{center} $dim(P) \leq 2$. \end{center}
+
+Por otro lado, consideremos $I=\{ (2,3,-4,1),(1,-2,-4,0),(0,5,-4,3) \} \subset P$. Este conjunto de tres puntos es afinmente independiente, luego:
+
+\begin{center} $dim(P) \geq 2$. \end{center}
+
+Por lo tanto,  $dim(P) = 2$. Esto tiene sentido, pues las ecuaciones (2) y (3) restringen P dentro de un plano, siendo por lo tanto una figura de 2 dimensiones.
+
+\subsection{Apartado C} Deseamos encontrar todos los vértices de P. Recordemos el siguiente resultado:
+
+\begin{center}
+$v  \in P$ es un vértice  $\Leftrightarrow \ \exists A^0 x \leq b^0$ subsistema de $Ax \leq b$ tal que $\{v \}=\{ x \in P \ | \ A^0 x = b^0 \}$
+\end{center}
+
+Por lo tanto, para hallar los vértices alcanza con analizar las soluciones (exactas) de todos los posibles subsistemas: aquellas que tengan una única solución y ésta sea parte de P, serán vértices.\
+
+Dadas las características de P, para hallar los vértices es suficiente con analizar algunos subsistemas y ahorrarnos el trabajo de probar todas las combinaciones. Observemos que:
+
+\begin{itemize}
+\item Si deseamos hallar un subsistema cuya solución sea sólo un punto, entonces necesariamente debemos incluír a la inecuación 1 en él; pues es la única que impone alguna restricción a la variable $x_3$. En otro caso, el resultado sería siempre vacío o un conjunto infinito pues $x_3$ quedaría libre. Asumir que la ecuación (1) siempre está en los subsistemas que vamos a considerar, además, nos permite reducir la dimensión del problema a 3 (pues eliminamos la variable $x_3$), y pensar a P en el espacio tridimensional.
+\item Las inecuaciones 2 y 3 definen un subespacio cada una. Al pedir que se cumplan las dos a la vez, se restringe el poliedro P a estar impreso en el plano que definen al reemplazar la desigualdad por igualdad:
+\begin{center}
+\includegraphics[width=0.4\textwidth]{hiperplano.png}
+\end{center}
+Llamaremos a este plano $\pi$. Dado que P estará dentro de $\pi$, para hallar sus vértices es suficiente con analizar los subsistemas que incluyen 1, 2 y 3.
+\end{itemize}
+
+El problema se reduce, entonces, a elegir cuales de las ecuaciones restantes (4,5,6 y 7) combinar con las tres que ya seleccionamos para generar los vértices. Nuevamente, analizando la forma de P, podemos observar lo siguiente:
+
+\begin{itemize}
+\item Las ecuaciones 4, 5 y 6, en el plano donde P existe, son tres rectas.
+\item La ecuación 7 al intersectar a $\pi$ forma la recta $-2x_2 + 6x_4 \leq 8$.
+\end{itemize}
+
+Estas cuatro rectas determinan cuatro semiplanos en $\pi$, y su intersección es P. En la imágen de la izquierda podemos observar a P en el plano $\pi$, en la imágen de la derecha podemos observar las cuatro rectas recién descriptas.
+
+\begin{center}
+\includegraphics[width=0.4\textwidth]{area.png}
+\includegraphics[width=0.4\textwidth]{rectas.png}
+\end{center}
+
+Dado que queremos encontrar soluciones únicas, entonces, la forma de hallar estos puntos es armar sistemas de cuatro ecuaciones con cuatro incógnitas. Ya tenemos dos elegidas\footnote{Contamos a (3) y (2) como una sola ecuación, pues son la misma}, y hay  $ \binom {4} {2}$ combinaciones que probar eligiendo entre las otras ecuaciones. Las soluciones de los subsistemas son:
+
+\begin{enumerate} 
+\item $(2,3,-4,1)  \in P$ con el subsistema 1 2 4 5
+\item $(1,-2,-4,0) \in P$  con el subsistema 1 2 4 6
+\item $(0,-7,-4,-1) \notin P$  con el subsistema 1 2 4 7
+\item $(0,5,-4,3) \in P$ con el subsistema 1 2 5 6
+\item $(0,5,-4,3) \in P$  con el subsistema 1 2 5 7 
+\item $(0,5,-4,3) \in P$  con el subsistema 1 2 6 7
+\end{enumerate}
+
+Luego, (todos) los vértices son: $\{ (2,3,-4,1),(1,-2,-4,0),(0,5,-4,3) \}$.
+\subsection{Apartado D}
+Sea $F_1= \{ x \in P \ | \ x_1 = 1\}$. Queremos ver que no es una cara. Observemos que el hiperplano que lo define no es un hiperplano soporte; pues los puntos $(2,3,-4,1),$ $(0,5,-4,3) \in P$ quedando uno a cada lado del hiperplano.
+
+\subsection{Apartado E}
+Veamos que $F_2 = \{x \in P \ | \ x_2 - x_4 = 2 \}$ es una faceta de P, es decir, una cara maximal. En primer lugar, observemos que es una cara pues es la solución del subsistema que solo incluye a la inecuación 5. 
+\par Además, es maximal, pues ya hemos visto que P es una figura en dos dimensiones y sus caras no propias serán vértices o bien segmentos. En este caso, $F_2$ es uno de los segmentos o bordes del triángulo.
+\par Una forma más formal de probar que la cara $F_2$ es una faceta es demostrando que dim($F_2$)=1. Esto es sencillo de ver, ya que $F_2$ es un poliedro definido por el mismo sistema de inecuaciones que P al cuál le agregamos la ecuación $x_2 - x_4 = 2$.
+\par Luego, la matriz $\bar{A_{F_2}}$ (derivada del sistema de ecuaciones implicado) será:
+
+\[ \bar{A_{F_2}} = \left( \begin{array}{cccc}
+    0  & 0 & 1  & 0  \\
+    -2 & 1 & -1 & 3  \\
+   4  & -2 & 2 & 6   \\
+   0 & 1 & 0 & -1 \\
+\end{array} \right)  \sim 
+ \left( \begin{array}{cccc}
+    1 & 0 & 0 & -2  \\
+   0 & 1 & 0 & -1 \\
+   0  & 0 & 1 & 0   \\
+   0 & 0 & 0 & 0 
+\end{array} \right)  \]
+
+
+Consecuentemente, tenemos que dim($F_2$)$ \leq$ 4 - rank($\bar{A_{F_2}}$) = 4 - 3 = 1. 
+\par Por otro lado, el conjunto $I_2=\{(2,3,-4,1),(0,5,-4,3)\} \subset F_2$ es AI. Luego, dim($F_2$)$ \geq 1$.
+\begin{flushright}
+$\therefore \ $dim($F_2$)$ = 1$.
+\end{flushright}
+
+
+\subsection{Apartado F}
+$F_3 = \{ x \in P \ | \ x_1 =0 \}$ es la solución del susbsistema que solo incluye a la inecuación 7, por lo tanto es una cara. La intersección del hiperplano soporte $x_1 = 0$ con el hiperplano definido por las inecuaciones 2 y 3, donde P está contenido, da lugar a la recta $x_2 - 3 x_4 = -4$, que solo comparte con P un vértice como hemos visto en el apartado C. Es decir, $F_3=\{(0,5,-4-3\}$
+
+\par Dado que existe otra cara, $F_2$ tal que $F_3 \subset F_2$ (estricto), sigue que $F_3$ no es una faceta.
+
+\par Más formalmente, dado que $F_3 = \{(0,5,-4-3)\}$, el máximo cardinal de un conjunto AI será 1; y luego $dim(F_3)=0<1$. Por lo tanto, $F_3$ no es una faceta.
+
+
+
+
+%Algebraicamente: \\
+
+%Sea $(x_1,x_2,x_3,x_4) \in P \ | \ x_1=0$. Entonces, reemplazando $ x_1=0$ en las inecuaciones 2 y 3, sigue %que $x_2 - 3 x_4 = -4$. Luego, $(x_1,x_2,x_3,x_4) \in F=\{ (x_1,x_2,x_3,x_4) \in P \ | \ x_2 - 3 x_4 = -4  %\}$. 
+%\par Como $F$ es una cara (originada del subsistema 2-3-7) sigue que $F_2 \subseteq F$ con F siendo otra %cara. Además, considerando p=(1,-2,-4,0) tenemos que $p \in F$ y $p \notin F_2$. Luego $F_2$ no es cara %maximal y entonces no es faceta.
+
+\section{Ejercicio 5B}
+
+Si $G'$ es un subgrafo inducido con una forma particular, podemos mejorar la cota dada en el apartado A:
+
+\begin{itemize}
+\item Si es una clique, claramente $\alpha(G')=1$ pues un conjunto estable podrá tener a lo sumo un elemento de esa clique.
+\item Si es un agujero impar, $\alpha(G')=\lceil \frac{n}{2}\rceil$.
+\item Si es un anti-agujero impar, $\alpha(G')=2$.
+\end{itemize}
+
+\section{Ejercicio 10}
+\subsection{Apartado A}
+\par Supongamos que las restricciones de caminos prohibidos se satisfacen para todo camino prohibido P con exactamente 2 arcos en $J^*$.
+\par Sea P un camino prohibido con $k>2$ arcos pertenecientes a $J^*$:
+\begin{center} $P:  v_1,\ldots,v_s \ $, $ \ k<s$ \end{center}
+\par Sea $I=\{i_1,i_2, \ldots, i_k \}\ \subseteq \ \{1,2, \ldots, s\}$ tal que $i_p < i_{p+1}$ para todo $p = 1,\ldots, k-1$ y $(v_{i_p},v_{(i_p)+1})\in J^*$ para todo $p = 1,\ldots, k$. 
+\par Es decir, los $i_j$ son los extremos izquierdos de los arcos de P que están en $J^*$. Como P es un camino prohibido, $i_1=1$ y $i_k=s-1$.
+\par Defino los siguientes caminos (prohibidos):
+\begin{center}
+$P_j = v_{i_j} v_{(i_j)+1} \ldots v_{i_{j+1}} v_{(i_{j+1})+1}$, $ \ j=1, \ldots, k-1$
+\end{center}
+\par De este modo, se subdivide P en caminos prohibidos. Observemos que son $k-1$ caminos prohibidos cuyos extremos son los $k$ arcos de  que están en $J^*$, y que por la forma que han sido definidos tienen exactamente 2 arcos pertenecientes a  $J^*$ cada uno.
+\par Luego, por hipótesis en cada subcamino $P_j$:
+\begin{center}
+$\sum_{e \in P_j} z_e \leq |P_j|-1$ para todo $ j=1, \ldots , k-1$
+\end{center}
+Sumando todas estas desigualdades:
+\begin{center}
+$\sum_{j=1}^{k-1} \sum_{e \in P_j} z_e \leq \sum_{j=1}^{k-1}|P_j|-1$ 
+\end{center}
+Trabajando algebraicamente y definiendo $e_I=(v_1,v_2)$, $e_F=(v_{s-1},v_s)$:
+\begin{center}
+$(\sum_{e \in P} z_e)  + (\sum_{j \in I-\{1,s-1\}} z_{(v_{i_j},v_{i_j +1})}  ) \leq |P|+(k-2) - (k-1) $ \\
+\end{center}
+Observemos que el miembro izquierdo está acotado inferiormente por $\sum_{e \in P} z_e$, pues el otro sumando es no negativo. Luego:
+\begin{center}
+$ \sum_{e \in P} z_e \leq |P| - 1 $ \\
+\end{center}
+
+Por lo tanto, la restricción se satisface para todo camino prohibido P.
+\subsection{Apartado B}
+Veamos que: \\
+
+ El procedimiento responde SI $\Leftrightarrow$ hay un camino prohibido P tal que $\sum_{e \in P} z_e^* > |P| -1 $  \\
+
+
+$\Rightarrow$) Supongamos que el procedimiento responde SI. Entonces lo hizo en el paso i o en el paso iii del bucle. 
+\par Si lo hizo en el paso i, entonces tenemos un camino prohibido (u,v) (v,t) de longitud 2 tal que 
+
+\begin{center}
+$z_{uv} + z_{vt} > 1  \Leftrightarrow  \sum_{e \in P} z_e^* > 1 = |P|-1 $ 
+\end{center}
+
+
+Por otro lado, si lo hizo en el paso iii, entonces hay un camino prohibido P= (u,v)$\bar{P}$(r,t), tal que $\bar{P}=e_1 e_2 \ldots e_k$ es un camino con k aristas cumpliendo:
+\begin{center}
+$\sum_{i=1}^k (1-z^*_{e_k}) < z_{uv}^* + z_{rt}^* - 1   \Leftrightarrow $ \\
+$ k - \sum_{i=1}^k z^*_{e_k} < z_{uv}^* + z_{rt}^* -1   \Leftrightarrow $ \\
+$ |P|-1 = k + 1 < \sum_{i=1}^k z^*_{e_k} + z_{uv}^* + z_{rt}^* = C(P) $
+\end{center}
+
+$\Leftarrow$) Supongamos que hay un camino prohibido P tal que $ \sum_{e \in P} z_e \leq |P| - 1 $. Como vimos en el apartado 1, puede subdividirse en caminos prohibidos con exáctamente 2 aristas en J*. Sea $P_1 = v_1 v_2 \ldots v_{k-1} v_k$ un sub-camino prohibido con exactamente dos aristas en J*. 
+\par Por definición de camino prohibido, sabemos que $z_{v_1 v_2}^* + z_{v_{k-1} v_k}^*>1$ y por la forma en que definimos $P_1$ todas sus aristas están en  A.
+\par Si no hay aristas internas, entonces el algoritmo detectará el camino prohibido durante la iteración del bucle $(u,v):= (v_1,v_2)$, $(r,t):=(v_{k-1},v_k)$ en el paso i. 
+\par Si hay aristas internas, entonces el algoritmo detectará un camino prohibido en la misma iteración, pues en el paso iii existirá algún camino v-r con los pesos adecuados tal que se encuentre un camino prohibido $u-t$.
+
+
+\section{Ejercicio 11}
+\subsection{Apartado A}
+\begin{enumerate}
+\item La primera restricción impone que en cada paso se pueda elegir a lo sumo un vértice.
+\item La segunda restricción impone que cada vértice pueda ser elegido a lo sumo una vez.
+\item La tercera restricción indica que para que un vértice sea elegido en un paso, debe marcar a algun vecino nuevo respecto al paso anterior.
+\item La cuarta restricción indica que, dado un vértice u y en el i-ésimo paso; no puede suceder a la vez que  u esté indicado como disponible y que uno de sus vecinos sea elegido en ese paso. Esta restricción evita inconsistencias, pues si un vecino de u es elegido, sus vecinos obviamente no pueden ser marcados pues ya lo están.
+\item La quinta restricción indica que si un vértice fue marcado ya no pueda volver a serlo; garantizando junto con la restricción anterior que x tenga valores consistentes.
+\item La última restricción es la que hace a las variables del problema ser variables de decisión.
+\end{enumerate}
+
+\subsection{Apartado B}
+\underline{Grupo 1}
+\par Se agregan dos nuevas restricciones que modelan el hecho de que, en cada paso, si un vértice puede ser marcado\footnote{Asumimos que todo vértice puede ser marcado en el paso 1}, entonces en el paso siguiente o bien se lo marca eligiendo a un vecino, o se lo sigue manteniendo como potencialmente marcable.
+\par Esto obliga al vector $x$ a estar siempre completado de forma correcta, pues la formulación anterior permitía muchas soluciones factibles cuyos valores de $x$ e $y$ son todos ceros, o comienzan a serlo a partir de un cierto paso; siendo soluciones no óptimas.
+\par Ejemplos de soluciones no óptimas eliminadas son: 
+\begin{itemize}
+\item  $x_{vi}=y_{vi}=0$ para todo v, i. 
+\item Dados $y^*, x^*$ solución óptima, podemos hacer $x^*_{vi}=y^*_{vi}=0$ para todo v para todo $i>j$ para algún $j$. Es decir, llenamos con ceros los vectores $x$ e $y$ a partir de un cierto $j$.
+\end{itemize}
+
+También se eliminan soluciones simétricas, por ejemplo en grafos donde hay vértices mellizos; si uno de los vértices arranca con $x$ apagado desde el principio; esta solución se elimina porque habrá una simétrica con el mismo valor. \\
+
+\underline{Grupo 2}
+\par Con la primera nueva restricción forzamos a las soluciones factibles a que en los primeros LB pasos algún vértice sea elegido (algún $y_{vi}=1$). De este modo eliminamos soluciones no óptimas (como la solución $y_{vi}=0$ para todo $v,i$) y eliminamos soluciones simétricas (como aquellas en que en algún paso $i<LB$ no se elige vértice)
+
+\par Con la segunda restricción forzamos a que sólo se pueda elegir un vértice nuevo si en el paso anterior se ha elegido uno. Es decir, se van eligiendo vértices en cada paso; y si en el paso i no se elige ningún vértice, entonces en ningún paso siguiente se podrán elegir más vértices.
+\par De este modo, se eliminan soluciones en las cuales hay huecos de pasos en que no se elige ningún vértice, para las cuales hay otras soluciones simétricas sin esos huecos.
+
+\subsection{Apartado C}
+Sea $x,y$ una solución factible de la relajación lineal de $\mathcal{F}_2$. Deseamos verificar que cumple la restricción (1).Veamos entonces que $\sum_{v \in V} y_{iv} \leq 1$ para todo $i=1..n$. 
+\par Si $i \leq LB$, entonces, por (9):
+\begin{center} $\sum_{v \in V} y_{iv} = 1 \leq 1$ \end{center}
+\par Por otro lado, si $i \geq LB$, veamos por inducción que se cumple:
+\begin{center} $P(i): \sum_{v \in V} y_{iv} \leq 1$ \end{center}
+\par Como caso base, ya demostramos que vale para $i \leq LB$.
+Supongamos ahora que vale $P(i)$ y queremos demostrar $P(i+1)$. Usando (10) y HI:
+
+\begin{center} $ \sum_{v \in V} y_{i+1 v} \leq \sum_{v \in V} y_{iv} \leq 1$ \end{center}
+Luego, queda demostrado P(i) para todo $i \leq n$.
+
+\subsection{Apartado D}
+Debemos probar que se cumplen las siguientes desigualdades.
+
+\begin{center} $ x_{ui} + \sum_{j=1}^i y_{wj} \leq 1, \ \ \forall u \in V; \  w \in N[u], \ i=2,\ldots,n$ 
+\end{center}
+
+Por lo tanto, sean $u,w,i$. Observemos que la desigualdad significa que ambos términos de la suma no pueden ser positivos a la vez. 
+\par Debido a la restricción (2), el término $\sum_{j=1}^i y_{wj}$ está acotado por 1. Luego, la desigualdad que deseamos probar significa que $x_{ui}$ y $\sum_{j=1}^i y_{wj}$ no pueden valer 1 a la vez. 
+\par Supongamos que hay una solución entera en $conv(S_1)$ tal que $x_{ui} = \sum_{j=1}^i y_{wj} = 1$, y sea $y_{wk}$ el término no nulo de la sumatoria. 
+\par Como $k<i$, $x_{uk}=1$, pues si fuera cero (por la restricción 5) debería ser $x_{ui}=1$. 
+\par Pero estamos afirmando que $x_{uk}=y_{wk}=1$ con $w \in N[u]$, lo cuál contradice la restricción (4). \par Absurdo, por lo tanto:
+\begin{center} $ x_{ui} + \sum_{j=1}^i y_{wj} \leq 1, \ \ \forall u \in V, W \in N[u], \ i=2,\ldots,n$ 
+\end{center}
+
+Un procedimiento de separación es el siguiente:
+
+\begin{flushleft}
+INPUT: $x^*,y^* \notin Z^n $\\
+OUTPUT: ¿Existe desigualdad tal que $x^*_i + \sum_{j=1}^i y^*_{wk} >1$ para algún $u \in V, \ w \in N[u], i=...$ ? \\
+\end{flushleft}
+\begin{verbatim}
+for i=2..n
+    for v in V
+        if (xi*>0){
+            for w in N[v]
+                if f(x*,y*) then return SI
+       }
+return NO
+\end{verbatim}
+where $f(x*,y*)  \equiv  x^*_i + \sum_{j=1}^i y^*_{wk} > 1 $ 
+
+
+\subsection{Apartado E}
+\subsubsection{Subapartado I}
+La desigualdad (21) es:
+\begin{center} $x_{12} \leq x_{11}$ \end{center}
+Y así, sucesivamente, las desigualdades de este grupo representan las desigualdades (5) de $\mathcal{F}_1$, de la forma:
+\begin{center} $x_{v i+1} \leq x_{vi}$ \end{center}
+
+\subsubsection{Subapartado II}
+La desigualdad (33) es:
+
+\begin{center} $y_{42} \leq  - x_{12} + x_{11} - x_{42} + x_{41} = \sum_{v \in N[4]} (x_{v1} - x_{v2})$ \end{center}
+
+Que corresponde en $\mathcal{F}_1$ a una desigualdad del grupo (3) con $v:=4$ e $i:=1$.\\
+
+La desigualdad (55) es:
+
+\begin{center} $x_{11} + y_{11} + y_{21} + y_{31} + y_{41} \leq 1 \Leftrightarrow x_{11} + \sum_{v \in N[1]} y_{v1} \leq 1 $ \end{center}
+
+Que corresponde a una desigualdad del grupo 4 con $u:=1, \ i:=1$.\\
+
+Por último, la desigualdad (34) es:
+
+\begin{center} $x_{13}-x_{12} + x_{43} - x_{42} + y_{43} \leq 0 \Leftrightarrow  y_{43} \leq \sum_{v \in N[4]} (x_{v2} - x_{v3})$ \end{center}
+
+Que es una desigualdad del grupo 3 con $v:=4, \ i:=2$.
+
+
+\subsubsection{Subapartado III}
+Consideremos la restricción (43):
+\begin{center}
+$x_{42} + y_{11} + y_{41} + y_{42} \leq 1$\end{center}
+\par Y los vectores $x,y \in \mathbb{R}^{4 \times 4} $ cuyas componentes son ceros excepto:
+\begin{flushleft}
+$x_{41} = 0.9$\\
+$x_{42} = 0.4$\\
+$y_{11} = 0.1$\\
+$y_{42}=0.5$ \\
+\end{flushleft}
+
+\par Estos vectores constituyen una solución factible de la relajación lineal de $\mathcal{F}_1$ pero no verifican la desigualdad 43. Luego, esta desigualdad es una nueva desigualdad. 
+\par Veamos que es válida en $P_1$. Notemos que esta desigualdad significa que sólo uno de los sumandos puede  valer 1 a la vez. 
+\par Supongamos que $x_{42}=1$. Luego, por la desigualdad (4) instanciada en $i:=2$ y $u:=4$, sabemos que $y_{42}=y_{41}=0$. Además, si $y_{11}=1$ se daría $x_{41}=0$ por (4) instanciada en $i:=1$ y $u:=4$; y debería ser $x_{42}=0$ por (5). Luego, $y_{11}=0$ también.
+\par Supongamos $y_{11}=1$. Entonces por (4) con $i:=1, \ u:=4$ tenemos que $y_{11}=x_{41}=0$ y luego $x_{42}=0$. Finalmente, $y_{42}=0$ por (3) en $v:=4, \ i:=1$
+\par Supongamos que $y_{41}=1$, por (2) en $v:=4$ tenemos que $y_{42}=0$. Por (1) en $i:=1$ tenemos $y_{11}=0$. Por (4) $x_{41}=0$, luego por (5) $x_{42}=0$. 
+\par Finalmente supongamos $y_{42}=1$. Entonces por (2) en $v:=4$ tenemos $y_{41}=0$ y por (4) en $u:=4, \ i:=2$ $x_{42}=0$. Además, si $y_{11}=1$, por (4) será $x_{v1}=0$ para todo v. Luego por (3) sería $y_{42}=0$, absurdo. Por lo tanto, también $y_{11}=0$.
+
+
+\subsubsection{Subapartado IV}
+
+Consideremos la restricción 274:
+\begin{center} $ x_{32} + x_{42}  +2y_{11}+ y_{12}          + y_{21}+ y_{22}          + y_{31}+ y_{32}+ y_{41}+ y_{42}           <= 2$
+\end{center}
+
+\par Sea (x,y) una solución factible de $\mathcal{F}_1$. Probar que esta desigualdad es válida para (x,y) equivale a probar que, en el miembro de la izquierda, no más de dos sumandos son positivos a la vez. Más aún, en el caso particular en que $y_{11}=1$, todos los demás sumandos deben cero.
+\par Analicemos entonces los posibles valores que pueden asumir estas variables, y veamos que se cumple la desigualdad.
+\begin{enumerate}
+\item Comencemos analizando el caso particular: supongamos que $y_{11}=1$. Veamos que todos los otros sumandos de la desigualdad son ceros:
+\begin{itemize}
+\item Dado que el vértice 1 está en la vecindad de todos los otros vértices y por el grupo de desigualdades (4), vale que $x_{31}=x_{41}=0$. Luego, por las desigualdades (5), $x_{32}=x_{42}=0$. 
+\item Más aún, por las desigualdades (4) se cumple que $x_{vi}=0 \ \forall \ v \ \forall i$. Luego, en las desigualdades (3), el lado derecho de la desigualdad siempre será 0. Por lo tanto $\forall v, \ \forall 1<i<n, \ y_{vi}=0$.
+\end{itemize}
+
+\item Analicemos ahora el caso en que el sumando $x_{32}=1$. Veamos que entoncs, a lo sumo otro de los sumandos será positivo. En primero lugar, por la desigualdad 4, $y_{32}=y_{12}=y_{22}=0$. Si combinamos la desigualdad 4 y 5 sabemos que:
+
+\begin{center}$x_{vi+1} + \sum_{u \in N[v]} y_{ui} \leq 1 \ \ \forall v \  \forall i<n \ \ \ (*)$\end{center}
+
+Instanciándo en $i:=1$, $v:=3$ sigue que  $y_{11}=y_{21}=y_{31}=0$. Luego, hay tres valores posiblemente no negativos: $x_{42}, \ y_{41} \ e \ y_{42}$. Veamos que sólo uno de ellos puede ser positivo junto con $x_{32}$:
+
+
+\begin{itemize}
+\item Si $x_{42}=1$, entonces por 4 vale $y_{42}=0$ y por (*) vale $y_{41}=0$. 
+\item Si $y_{41}=1$, entonces por 2 vale $y_{42}=0$. Además por 4 vale $x_{41}=0$, ocasionando $x_{42}=0$ por 5.
+\item Si $y_{42}=1$, entonces por 4 vale $x_{42}=0$ y por 2 vale $y_{41}=0$.
+\end{itemize}
+
+\item Si el sumando $x_{42}=1$, entonces por la desigualdad 4 y por *, $y_{42}=y_{41}=y_{12}=y_{11}=0$. Observemos nuevamente que si uno de los sumandos restantes es 1, entonces todos los demás son ceros:
+\begin{itemize}
+\item Si $x_{32}=1$, ya analizamos en el caso anterior que todos los demás son ceros.
+\item Ya analizamos que $y_{11}=0$
+\item Si $y_{21}=1$, entonces por 2 valdrá $y_{22}=0$; y por (1) en $i:=1$, $y_{31}=0$. Además, como $y_{21}=1$ tendremos que $x_{31}=0$ por (4) en $i:=1$ $u:=3$. Análogamente, $y_{32}=0$.
+\item Si $y_{22}=1$, entonces por 2 valdrá $y_{21}=0$; y por (1) en $i:=2$ $y_{32}=0$. Análogamente $y_{31}=0$.
+\item Si $y_{31}=1$, entonces $y_{32}=0$ por (2) en $v:=3$ y $y_{21}=0$ por (1) en $i:=1$. Además por (3) será $y_{22}=0$ pues todos sus vecinos habrán sido marcados por en el paso 1.
+\item Si $y_{32}=1$, entonces $y_{31}=0$ por (2) en $v:=3$ y $y_{22}=0$ por (1) en $i:=2$. Además $y_{21}=0$ pues si fuera 1, $y_{32}=0$ por (3) ya que todos sus vecinos habrían sido marcados.
+\end{itemize}
+
+Luego, solo nos resta analizar que los sumandos $y_{kl}$ no sean positivos más de dos a la vez..
+\item Si $y_{21}=1$, entonces por 1 y 2 en $i:=1, \ v:=2$ respectivamente , $y_{31}=y_{41}=y_{22}=0$. Luego, solo uno de entre $y_{32}$ e $y_{42}=0$  podría ser positivo también.
+\item Si $y_{31}=1$ el análisis es análogo porque son mellizos verdaderos.
+\item Si $y_{41}=1$ entonces $y_{31}=y_{21}=0=y_{42}$ por (1) y (2).
+
+
+\end{enumerate}
+
+\subsection{Apartado F}
+\subsubsection{Subapartado I}
+Para demostrar $dim(P_2)=5$ acotaré $dim(P_2)$ inferior y superiormente. Observemos que las soluciones tienen dimensión 32.
+\par En primer lugar, consideremos las primeras 27 ecuaciones de paw2.ieq. A simple vista podemos ver que ninguna puede expresarse como CL lineal de las otras, pues cada una involucra variables que las otras no.
+\par Luego, la matriz $\bar{A}$ tendrá, al menos, rango 26. Por lo tanto, 
+
+\begin{center}
+$dim(P_2) <= 32 - rank(\bar{A}) <= 32 - 27 = 5$
+\end{center}
+
+\par Por otro lado, consideremos 6 puntos de entre las soluciones de paw.poi:
+
+\begin{verbatim}
+(   1) 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 1 0 0 
+(   2) 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 
+(   3) 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 1 0 0 0 0 0 0 1 0 0 0 0 0 0 0 
+(   5) 0 0 0 0 1 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 1 0 0 0 
+(   6) 0 0 0 0 1 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 1 0 0 0 
+(   7) 0 0 0 0 1 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 1 0 0 0 
+\end{verbatim}
+
+Estos 6 puntos son afinmente independiente, por lo tanto:
+
+
+\begin{center}
+$dim(P_2) >= 5$
+\end{center}
+
+\begin{flushright}
+$\therefore dim(P_2) = 5$
+\end{flushright}
+\subsubsection{Subapartado II}
+\par En primer lugar, notemos que $C=\{ x \in P_2 | x_{12} = x_{11}  \} $ es una cara, pues deriva de forzar igualdad en una restricción del grupo (5) con u:=1, i:=1.  
+\par Sin embargo, notemos en paw2.ieq que esta ecuación puede derivarse de la formulación ideal, es decir, todo el poliedro la cumple. Luego $dim(C) = 5 \neq 4 = dim(P)-1$, por lo tanto no es una faceta. 
+
+\subsubsection{Subapartado III}
+\par Nuevamente, notemos que $F= \{ x \in P | y_{21}=0 \}$ es una cara pues se deriva de $y \geq 0$.
+\par Además, si agregamos esta restricción a las ecuaciones en del subapartado i, tenemos que:
+
+\begin{center} $dim(F) \leq 32 - 28 \leq 4$  \end{center}
+
+\par Por otro lado, consideremos un subconjunto de los puntos del subapartado i (que será AI por ser subconjunto de un conjunto AI):
+
+\begin{verbatim}
+(   1) 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 1 0 0  
+(   3) 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 1 0 0 0 0 0 0 1 0 0 0 0 0 0 0 
+(   5) 0 0 0 0 1 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 1 0 0 0 
+(   6) 0 0 0 0 1 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 1 0 0 0 
+(   7) 0 0 0 0 1 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 1 0 0 0 
+\end{verbatim}
+
+\par Entonces, 
+\begin{center} $dim(F) \geq 4$  \end{center}
+
+\begin{flushright}
+$\therefore dim(F)=4$ y F es una faceta.
+\end{flushright}
+
+En paw2.ieq, $y_{21}$ se corresponde con x21. De las desigualdades:
+
+\begin{verbatim}
+( 27)       +x21            +x25            +x29         == 1 
+(  7)                       +x25            +x29         <= 1
+\end{verbatim}
+
+Sigue que x21>0.
+
+
+\end{document}
+
+

@@ -1,0 +1,554 @@
+\documentclass {article} 
+
+\usepackage{lmodern}
+\usepackage [spanish] {babel} 
+\usepackage [T1]{fontenc}
+\usepackage [latin1]{inputenc}
+\usepackage{amsthm} % para poder usar newtheorem
+\usepackage{cancel} %Para poder hacer el simbolo "no es consecuencia semántica" etc.
+\usepackage{graphicx} 
+\usepackage{amsmath} %para poder usar mathbb
+\usepackage{amsfonts} %sigo intentando usar mathbb
+\usepackage{amssymb} %therefore
+\usepackage{ mathabx } %comillas
+\usepackage{ verbatim } 
+\theoremstyle{remark}
+\newtheorem{thm}{Teorema}
+\newtheorem{lem}{Lema}[section]
+\newtheorem{cor}{Corolario}[section]
+\newtheorem{deff}{Definición}[section]
+\newtheorem{obs}{Observación}[section]
+\newtheorem{ej}{Ejercicio}[section]
+\newtheorem{ex}{Ejemplo}[section]
+\newtheorem{alg}{Algoritmo}[section]
+\usepackage[latin1]{inputenc} 
+\usepackage{listings}
+\usepackage{verbatim}
+\usepackage{hyperref}
+\usepackage{proof}
+\usepackage{anysize}
+\marginsize{3cm}{3cm}{3cm}{3cm}
+\usepackage{tikz}
+\usepackage{ stmaryrd }
+
+\begin{document} 
+
+
+
+\begin{titlepage}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
+
+\center % Center everything on the page
+ 
+%----------------------------------------------------------------------------------------
+%    HEADING SECTIONS
+%----------------------------------------------------------------------------------------
+
+\textsc{\Large Facultad de Ciencias Exactas, Ingeniería y Agrimensura}\\[1.5cm] % Name of your university/college
+
+\textsc{ Tópicos Avanzados en Optimización Combinatoria y Teoría de Grafos}\\[0.5cm] % Minor heading such as course title
+
+%----------------------------------------------------------------------------------------
+%    TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\HRule \\[0.4cm]
+{ \huge \bfseries PRÁCTICA 4}\\[0.4cm] % Title of your document
+\HRule \\[1.5cm]
+ 
+%----------------------------------------------------------------------------------------
+%    AUTHOR SECTION
+%----------------------------------------------------------------------------------------
+
+%\begin{minipage}{0.4\textwidth}
+%\begin{flushleft} \large
+%\emph{Autor:}\\
+%Rodríguez Jeremías % Your name
+%\end{flushleft}
+%\end{minipage}
+
+%\begin{minipage}{0.4\textwidth}
+%\begin{flushright} \large
+%\emph{Profesor:} \\
+%Mauro Jaskelioff % Supervisor's Name
+%\end{flushright}
+%\end{minipage}\\[4cm]
+
+% If you don't want a supervisor, uncomment the two lines below and remove the section above
+\Large \emph{Alumno: Rodríguez Jeremías}\\
+
+
+%----------------------------------------------------------------------------------------
+%    DATE SECTION
+%----------------------------------------------------------------------------------------
+
+{\large \today}\\[3cm] % Date, change the \today to a set date if you want to be precise
+
+%----------------------------------------------------------------------------------------
+%    LOGO SECTION
+%----------------------------------------------------------------------------------------
+
+%\includegraphics{Logo}\\[1cm] % Include a department/university logo - this will require the graphicx package
+ 
+%----------------------------------------------------------------------------------------
+
+\vfill % Fill the rest of the page with whitespace
+
+\end{titlepage}
+
+\section{Ejercicio 2}
+Apliqué el algortimo Tree Total Domination aprendido en clase para resolver PDT en árboles, obteniendo el siguiente conjunto:
+
+\begin{center}
+\includegraphics[width=0.5\textwidth]{sol.jpg}
+\end{center}
+
+\section{Ejercicio 5}
+Debo reducir polinomialmente 3-SAT a 3-SA$T^*$.\\
+\par Sea $\phi = \bigwedge_{i=1}^n c_i$, una instancia de 3-SAT (expresión booleana, donde cada $c_i$ es una cláusula con a lo sumo tres literales). 
+\par Convertiré $\phi$ en una instancia de 3-SA$T^*$ modificando cada cláusula de la siguiente forma:
+
+\begin{center}
+$\phi^* = \bigwedge_{i=1}^n f(c_i)$
+\end{center}
+
+Donde f modifica cada cláusula de acuerdo a cuántos literales distintos tiene. En algunos casos es necesario agregar variables frescas y transformar una cláusula en varias cláusulas:
+
+\begin{flushleft}
+
+
+$c_i = l_{1i}              \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \          \Rightarrow f(c_i)= (l_{1i} \vee x^F_{1i} \vee x^F_{2i}) \wedge
+             (l_{1i} \vee x^F_{1i} \vee \lnot x^F_{2i}) \wedge
+             (l_{1i} \vee \lnot x^F_{1i} \vee x^F_{3i}) \wedge
+             (l_{1i} \vee \lnot x^F_{1i} \vee \lnot x^F_{3i}))$  \\
+
+$c_i = l_{1i} \vee l_{2i}       \ \ \ \ \ \ \       \Rightarrow  f(c_i)= (l_{1i} \vee l_{2i} \vee x^F_{1i}) \wedge  (l_{1i} \vee l_{2i} \vee \lnot x^F_{1i}) $ \\
+$c_i = l_{1i} \vee l_{2i}  \vee l_{3i} \Rightarrow f(c_i)= l_{1i} \vee l_{2i}  \vee l_{3i}$\\
+\end{flushleft}
+
+\par Esta transformación es $\mathcal{O}(n)$ pues se recorre la expresión $\phi$ exáctamente una vez,realizando trabajo constante en cada cláusula.\\
+  
+Veamos que esta transformación es válida:
+
+\begin{center}
+¿ La respuesta de $\phi$ en 3-SAT es "si" $\Leftrightarrow$ La respuesta de $\phi^*$ en 3-SA$T^*$ es "si". ?
+\end{center}
+
+Veamos las dos implicancias:\\
+
+
+$\Leftarrow)$ Supongamos que la respuesta de $\phi^*$ en 3-SA$T^*$ es "si". Sea $n$  el número cláusulas y $m$ el número de variables distintas de $\phi$. Entonces, hay una asignación de valores de verdad $v$:
+
+\begin{center}
+$v : \{x_1, x_2 \ldots x_m \} \cup \{ x_{ij}^F \ | \ (i,j) \in I \} \mapsto \{ true,false \}$
+\end{center}
+
+tal que $\llbracket \phi^* \rrbracket_v = true $. Entonces, consideremos la siguiente asignación de valores de verdad para las variables de $\phi$:
+
+\begin{center}
+$v' : \{x_1, x_2 \ldots x_m \} \mapsto \{ true,false \}$ tal que $v'(x_i) = v(x_i)$.
+\end{center}
+
+Veamos que $\llbracket \phi \rrbracket_{v'} = true $ lo cual implicaría que $\phi$ es satisfactible. Como $\llbracket \phi^* \rrbracket_v = true $, entonces $\llbracket f(c_i) \rrbracket_v = true \ \forall\  i \in \{ 1 \ldots n\}$. Analicemos los distintos casos de $f(c_i)$:
+
+\begin{itemize}
+
+
+
+\item Si $c_i$ está formada por tres literales distintos:
+
+
+
+\begin{center}
+$true =  \llbracket f(c_i) \rrbracket_v = \llbracket c_i \rrbracket_v =  \llbracket c_i \rrbracket_{v'}  $
+\end{center}
+
+\item Si $c_i$ está formada por exactamente dos literales distintos:
+
+\begin{eqnarray}
+\nonumber && true \\
+\nonumber &=&\\
+\nonumber && \llbracket f(c_i) \rrbracket_v \\ 
+\nonumber &=&\\
+\nonumber && \llbracket (l_{1i} \vee l_{2i} \vee x^F_{1i}) \wedge  (l_{1i} \vee l_{2i} \vee \lnot x^F_{1i}) \rrbracket_v \\
+\nonumber &=&\\
+\nonumber && \llbracket  l_{1i} \vee l_{2i} \vee ( x^F_{1i} \wedge \lnot x^F_{1i}) \rrbracket_v \\
+\nonumber &=&\\
+\nonumber && \llbracket l_{1i} \vee l_{2i} \vee false \rrbracket_v   \\ 
+\nonumber &=&\\
+\nonumber && \llbracket l_{1i} \vee l_{2i} \rrbracket_{v'} \\
+\nonumber &=&\\
+\nonumber && \llbracket c_i \rrbracket_{v'} 
+\end{eqnarray}
+
+\item Si $c_i$ está formada por un solo literal: \\
+
+\begin{eqnarray}
+\nonumber && true \\
+\nonumber &=&\\
+\nonumber && \llbracket f(c_i) \rrbracket_v \\ 
+\nonumber &=&\\
+\nonumber && \llbracket 
+             (l_{1i} \vee x^F_{1i} \vee x^F_{2i}) \wedge
+             (l_{1i} \vee x^F_{1i} \vee \lnot x^F_{2i}) \wedge
+             (l_{1i} \vee \lnot x^F_{1i} \vee x^F_{3i}) \wedge
+             (l_{1i} \vee \lnot x^F_{1i} \vee \lnot x^F_{3i}))
+ \rrbracket_v \\
+\nonumber &=&\\
+\nonumber && \llbracket 
+             ( (l_{1i} \vee x^F_{1i}) \vee ( x^F_{2i} \wedge \lnot x^F_{2i}) )             \wedge
+             ( (l_{1i} \vee \lnot x^F_{1i}) \vee (x^F_{3i} \wedge \lnot x^F_{3i} ) )
+ \rrbracket_v \\
+\nonumber &=&\\
+\nonumber && \llbracket 
+             ( (l_{1i} \vee x^F_{1i}) \vee false )             \wedge
+             ( (l_{1i} \vee \lnot x^F_{1i}) \vee false )
+ \rrbracket_v \\
+\nonumber &=&\\
+\nonumber && \llbracket 
+             ( (l_{1i} \vee x^F_{1i})  )             \wedge
+             ( (l_{1i} \vee \lnot x^F_{1i})  )
+ \rrbracket_v \\
+\nonumber &=&\\
+\nonumber && \llbracket 
+              l_{1i} \vee ( x^F_{1i} \wedge \lnot x^F_{1i})     
+ \rrbracket_v \\
+ \nonumber &=&\\
+\nonumber && \llbracket 
+              l_{1i}     
+ \rrbracket_v \\
+  \nonumber &=&\\
+\nonumber && \llbracket 
+              c_i   
+ \rrbracket_v \\
+  \nonumber &=&\\
+\nonumber && \llbracket 
+              c_i   
+ \rrbracket_{v'}\end{eqnarray}
+
+
+
+\end{itemize}
+
+Luego, hemos visto que cada cláusula de $c_i$ de $\phi$ es verdadera bajo la asignación de variables $v'$, por lo que $\phi$ es satisfactible.
+
+$\Rightarrow)$ Supongamos $\llbracket \phi \rrbracket_{v}=true$ para alguna asignación de valores de verdad $v$. Defino una asignación de valores de verdad $v'$ para $\phi^*$ como sigue:
+
+\begin{eqnarray}
+\nonumber v'(x_i)   &=& v(x_i), \ \ i \in \{1 \ldots n\}\\
+\nonumber v'(x_{ij}^F) &=& false , \ \ (i,j) \in I
+\end{eqnarray}
+
+Como $\llbracket c_i \rrbracket_{v}=true$ para toda cláusula, veamos por casos en $c_i$ que $ \llbracket f(c_i) \rrbracket_{v'} = true$:
+
+\begin{itemize}
+
+\item Si $c_i$ está formada por tres literales distintos:
+
+\begin{center}
+$true =  \llbracket f(c_i) \rrbracket_v = \llbracket c_i \rrbracket_v =  \llbracket c_i \rrbracket_{v'}  $
+\end{center}
+
+
+\item Si $c_i$ está formada por exactamente dos literales distintos:
+
+
+\begin{eqnarray}
+\nonumber && \llbracket f(c_i) \rrbracket_{v'} \\
+\nonumber &=&\\
+\nonumber && \llbracket (l_{1i} \vee l_{2i} \vee x^F_{1i}) \wedge  (l_{1i} \vee l_{2i} \vee \lnot x^F_{1i}) \rrbracket_{v'}  \\
+\nonumber &=&  \\
+\nonumber && \llbracket  l_{1i} \vee l_{2i} \vee ( x^F_{1i} \wedge \lnot x^F_{1i}) \rrbracket_{v'} \\
+\nonumber &=&\\
+\nonumber && \llbracket l_{1i} \vee l_{2i} \vee false \rrbracket_{v'}   \\
+\nonumber &=&\\
+\nonumber && \llbracket l_{1i} \vee l_{2i} \rrbracket_{v'} \\
+\nonumber &=&\\
+\nonumber && \llbracket l_{1i} \vee l_{2i} \rrbracket_{v} \\
+\nonumber &=&\\
+\nonumber && \llbracket c_i \rrbracket_{v} \\
+\nonumber &=&\\
+\nonumber && true 
+\end{eqnarray}
+
+\item Si $c_i$ está formada por tres literales distintos:
+
+\begin{eqnarray}
+\nonumber && \llbracket f(c_i) \rrbracket_{v'} \\ 
+\nonumber &=&\\
+\nonumber && \llbracket 
+             (l_{1i} \vee x^F_{1i} \vee x^F_{2i}) \wedge
+             (l_{1i} \vee x^F_{1i} \vee \lnot x^F_{2i}) \wedge
+             (l_{1i} \vee \lnot x^F_{1i} \vee x^F_{3i}) \wedge
+             (l_{1i} \vee \lnot x^F_{1i} \vee \lnot x^F_{3i}))
+ \rrbracket_{v'} \\
+\nonumber &=&\\
+\nonumber && \llbracket 
+             ( (l_{1i} \vee x^F_{1i}) \vee ( x^F_{2i} \wedge \lnot x^F_{2i}) )             \wedge
+             ( (l_{1i} \vee \lnot x^F_{1i}) \vee (x^F_{3i} \wedge \lnot x^F_{3i} ) )
+ \rrbracket_{v'} \\
+\nonumber &=&\\
+\nonumber && \llbracket 
+             ( (l_{1i} \vee x^F_{1i}) \vee false )             \wedge
+             ( (l_{1i} \vee \lnot x^F_{1i}) \vee false )
+ \rrbracket_{v'} \\
+\nonumber &=&\\
+\nonumber && \llbracket 
+             ( (l_{1i} \vee x^F_{1i})  )             \wedge
+             ( (l_{1i} \vee \lnot x^F_{1i})  )
+ \rrbracket_{v'} \\
+\nonumber &=&\\
+\nonumber && \llbracket 
+              l_{1i} \vee ( x^F_{1i} \wedge \lnot x^F_{1i})     
+ \rrbracket_{v'} \\
+ \nonumber &=&\\
+\nonumber && \llbracket 
+              l_{1i}     
+ \rrbracket_{v'} \\
+  \nonumber &=&\\
+\nonumber && \llbracket 
+              c_i   
+ \rrbracket_{v'} \\
+  \nonumber &=&\\
+\nonumber && \llbracket 
+              c_i   
+ \rrbracket_{v}\\
+   \nonumber &=&\\
+\nonumber && true
+ \end{eqnarray}
+ 
+
+ 
+
+\end{itemize}
+ Luego, hemos visto que de $\phi^*$ es verdadera bajo la asignación de variables $v'$, por lo que $\phi^*$ es satisfactible.
+
+
+\begin{flushright}
+$\therefore$ la reducción es válida.
+\end{flushright}
+
+
+\section{Ejercicio 6}
+\subsection{Apartado A}
+\par Sea $G=(V,E)$ , $v$ vértice colgante de G, y $u$ su único vecino. Sea $s'$ una secuencia total legal de cardinal máximo en $G- \{u,v\} $. 
+\par Consideremos la secuencia de vértices $ s = (v,s',u) $ en G. Reescribimos $s$ como sigue:
+
+\begin{center}
+$s = a_1 a_2 \ldots a_n \ \ $ donde  $a_1=v$ y $a_n=u$
+\end{center}
+
+\par Veamos que $s$ es legal total de cardinal máximo en G.
+\par ¿Es secuencia legal? Veamos que verifica la definición:
+
+\begin{center}
+$ N(a_i) - \bigcup_{j=1}^{i-1} N(a_j) \neq \emptyset$ $\ \forall \ \ i  \in \ \{2 \ldots n \}$
+\end{center}
+
+\begin{itemize}
+\item Está claro que esa afirmación vale para $i=2$ pues $N_{G- \{ u,v\}}(a_2)$ no es vacío y $N(a_1)=\{u\}$ con $u \notin  N_{G- \{u,v\}}(a_2)$. 
+\item Esta afirmación vale, con el mismo razonamiento, para $i < n$ por el hecho de que $s'$ es una secuencia total legal en $G-\{u,v\}$ y en cada paso estamos restando el vértice $u$  que no estaba en $G- \{u,v \} $ 
+\item Para i=n, $N(u) = v$ y como $v$ es colgante, $v$ no está en las vecindades de todos los otros. 
+\end{itemize}
+
+\par Por lo tanto, $s$ es legal total en G. ¿ Es también de máxima longitud ?
+
+\par Supongamos que no. Entonces hay otra secuencia $t$ en G de longitud $|t| > |s| = |s'|+2$. 
+\par Consideramos la secuencia $t'$ que es la secuencia $t$ a la que le sacamos los vértices $u$ y $v$ si alguno de ellos estuviera presente. Analicemos que sucede con $t'$ en $G-\{u,v\}$
+\begin{itemize}
+\item Si la secuencia $t'$ dejó de ser legal total en $G-\{u,v\}$, entonces hay un elemento $t_k$ en la secuencia t tal que $N(t_k)$ 'marca' a un único vértice nuevo de su vecindad: $u$. Entonces, la secuencia  $t$ no contiene a $v$ pues al estar $t_v$ en la secuencia, $t$ no hubiera sería una secuencia legal total teniendo a ambos $v_t$ y $v$. Entonces si a $t'$ le sacamos $v_t$, formamos una nueva secuencia $t''$ legal total en $G-\{u,v\}$. Observemos que $|t''| = |t'|-1 \geq |t|-2 > |s| -2 = |s'|  $. 
+Absurdo pues $s'$ era stl de cardinal máximo en $G-\{u,v\}$ y estamos encontrando una de cardinal mayor.
+\item Si la secuencia $t'$ es legal total en $G- \{u,v\}$, entonces $|t'| \geq |t| -2 > |s|-2 = |s'|$. Absurdo, pues $s'$ es de stl longitud máxima en $G- \{u,v\}$.
+\end{itemize}  
+
+Por lo tanto, $s$ es de longitud máxima.
+
+\subsection{Apartado B}
+
+
+Algoritmo: \\
+
+\begin{verbatim}
+entrada: árbol G
+inicialización:  
+  prefix <- {}   
+    suffix <- {}    
+iteración
+    if (G=={} ó G es un conjunto de vértices aislados)
+        return (prefix ++ suffix);
+    else {
+        elegir una hoja h de G con padre p
+        prefix <-   prefix ++ h
+        suffix <-   p ++ suffix 
+        G <- G - p - {hijos de p}
+    }
+
+}
+
+\end{verbatim}
+
+Este algoritmo iterará una cantidad $O(n)$ de veces (pues la cantidad de hojas a eliminar es $O(n)$). Podemos acotar el costo de cada iteración también por $O(n)$ suponiendo que chequear si es un conjunto de vértices aislados, elegir una hoja y borrar nodos es $O(n)$.\\
+Por lo tanto, el algoritmo será $O(n^2)$, polinomial.\\
+
+Notemos que el algoritmo puede reescribirse de forma recursiva como sigue:
+
+\begin{verbatim}
+
+grundyTotalSequence(grafo G){
+    if (G=={} ó G es un conjunto de vértices aislados)
+        return {};
+    else {
+        elegir una hoja h de G con padre p
+        return (h ++ grundyTotal (G - p - hijos p) ++ p)
+    }
+
+}
+
+\end{verbatim}
+
+Reescrito de esta forma puede verse más claramente que en cada paso estamos utilizando el ejercicio (a) para ir obteniendo secuencias legales totales de cardinal máximo en subrafos, hasta llegar a una secuencia legal total de cardinal máximo del mismo grafo G.
+
+\section{Ejercicio 10C}
+\par Sea G=(V,E) grafo. Sea G* obtenido a partir de G subdividiendo todas sus aristas y colocando luego un vértice pendiente a cada nuevo vértice de la subdivisión. Sea D un conjunto dominante total de G* con $|D|\leq j + |E|$. Deseamos hallar un cubrimiento en G con tamaño menor o igual a j. 
+\par Llamaré $m_{ij}$ al vértice añadido en G* al subdividir el arista $i \ j$ en G. Llamaré $c_{ij}$ al vértice que cuelga de $m_{ij}$. Como D es dominante total, en particular domina a todos los $c_{ij}$. La única forma de dominarlos es forzando a que $m_{ij} \in D$ para todo par de vértices $i, \ j$ tal que $i \ j \in E(G)$. 
+\par Además, como D es tominante total, domina a todos los $m_{ij}$. Entonces, al menos uno de los siguientes tres estará en D: el $i$, $j$ ó $c_{ij}$.
+\par Consideremos el siguiente conjunto obtenido a partir de D al cuál le eliminamos todos los $m_{ij}$ y para cada $c_{ij}$ que tuviera, lo reemplazamos por alguno de entre i y j.\\
+
+\begin{center} $C= (D \cap V(G)) \cup \{ i \ | \ c_{ij} \in D \}$ \end{center}
+
+\par Remarco nuevamente que a $c_{ij}$ lo reemplazamos por exáctamente uno de entre i y j. (Supongo que las etiquetas de los $c_{ij}$ tienen un cierto orden dado para que la definición conjuntista de C esté bien dad).
+\par Observemos que $|D| \leq |E| + j$, donde hay una cantidad no mayor a $j$ de vértices que no son $m_{ij}$. Entonces, $|C|\leq j$. Si C es un cubrimiento por vértices, entonces el ejercicio queda demostrado.
+\par Para verificar esto, sea $v_1 v_2$ un arista de G. Como $m_{v_1,v_2}$ es arista de G*, alguno de entre $v_1,v_2$ y $c_{v_1,v_2}$ estaba en D. Consecuentemente, por definición de C, alguno de entre $v_1$ y $v_2$ pertenece a C. Luego C es un cubrimiento por vértices.
+
+
+\section{Ejercicio 12}
+\subsection{Apartado A}
+
+\par Debo dar un algoritmo polinomial que determine si un grafo admite un 2 coloreo equitativo en tiempo polinomial. Observemos que un grafo admitirá dicho coloreo si cada una de sus componentes es un grafo bipartito. Asumiré que el grafo es conexo.
+
+\par Presentaré un algoritmo previos: \\
+
+\textbf{Algoritmo: Hallar bipartición}
+
+Este algoritmo recibe un grafo conexo y retorna una bipartición, si es que el grafo es bipartito; ERROR en caso contrario. La idea es la siguiente: Se elige un primer vértice y lo ubica arbitrariamiente en una de las biparticiones. \\
+Coloca a sus vecinos en la otra bipartición y luego repite con cada uno de ellos este procedimiento hasta terminar de clasificar todos los vértices o detectar un ciclo.\\
+El pseudocódigo y un ejemplo iteración por iteración están a continuación:
+
+\begin{verbatim}
+Algoritmo: Hallar bipartición
+Entrada  : G grafo conenxo
+Salida   : (U,V) bipartición o ERROR si hay un ciclo.
+
+Variables:
+    Revisados : lista que mantendrá en cada iteración los
+         vértices que ya han sido ubicados en una bipartición
+    A_chequear: lista que mantendrá en cada iteración pares
+        (vértice,etiqueta_de_bipartición) a chequear si están bien ubicados
+    U, V      : Listas donde se mantendrán las dos biparticiones
+
+Inicialización:
+    Revisados = {}
+    U = {}
+    Elegir un vértice w cualquiera de G.
+    A_chequear = { (w,v) } 
+    V = {w}
+
+
+Iteración:
+    If (A_chequear == {})
+        return (U,V)
+    Else{
+        elegir un par (w,partición) en A_chequear.
+        If (algún vecino de w está en partición)
+            return ERROR
+        Else {
+            agrego todos los vecinos de w a la otra partición
+            agrego todos los vecinos de w que no están en la lista de  (sigue->)
+                revisados, a A_chequear con la etiqueta de la otra partición
+            Revisados <- Revisados UNION {w}
+        }
+    }    
+\end{verbatim}
+
+
+Análisis de complejidad: Tenemos a lo sumo n iteraciones. En cada iteración, supongo que:
+\begin{itemize}
+\item Obtener los vecinos de un vértice es constante (hemos hecho implementaciones así).
+\item Chequear si un vértice está en una partición es O(n)
+\item Chequear si un vértice está revisado es O(n)
+\item Agregar vértices a cualquier lista es constante
+\end{itemize}
+En cada iteración tenemos un costo acotado por $O(n^2)$ pues un vértice tiene $O(n)$ hijos y para cada uno de ellos hará un trabajo de costo O(n).\\
+Luego, este algoritmo es $O(n^3)$. \\
+
+
+%\textbf{Algoritmo 2: Hallar componentes conexas}
+%Dado un grafo, este algoritmo toma un vértice y recorre sus vecinos recursivamente hasta hallar toda la %componente conexa. Luego toma otro vértice no visitado y repite el procedimiento. De esta forma encuentra %todas las componentes conexas del grafo.
+
+
+%\begin{verbatim}
+%ENTRADA: Grafo G
+%SALIDA : C, Conjunto de componentes de G
+
+
+%INICIALIZACIÓN
+%C <- {}
+%Elegir un vértice cualquiera v de G.
+%ComponenteActual    <- {v}
+%VerticesPorAnalizar <- {v}
+%VérticesAnalizados  <- {v}
+
+%ITERACIÓN
+
+%If (VérticesPorAnalizar = {})                 // Terminamos de juntar una componente
+%    agregar CompoenenteActual a C
+%           if ( V(G) - VérticesAnalizados == {})
+%        return C
+%    else
+%        elegir un vértice v en V(G) - Vértices analizados
+%        ComponenteActual <- {v}
+%        VérticesPorAnalizar <- {v}
+%Else
+%    tomar vértice w en VérticesPorAnalizar
+%    agregar todos sus vecinos a ComponenteActual
+%    agregar todos sus vecinos que no estén en vérticesAnalizados a VérticesPorAnalizar 
+%    agregar w a vérticesAnalizados
+%    
+%\end{verbatim}
+
+%La complejidad es cuadrática, pues hay una iteración por cada vértice y en cada iteración hace un trabajo %acotado por O(n).
+
+\textbf{Algoritmo final}
+Finalmente, el algoritmo de decisión consiste en aplicar el algoritmo anterior y chequear los cardinales de las componentes. \\
+ 
+
+
+\begin{verbatim}
+Algoritmo: Decidir si hay un 2-coloreo equitativo
+Entrada: Grafo G conexo
+
+Código:
+
+decidir_coloreo_equitativo(grafo G) {           
+      (U,V) <- hallarBiparticion(c)  
+      if ( ||U| - |V|| > 1  ó hubo ERROR)
+            return NO
+      }
+    return SI
+}
+\end{verbatim}
+Este algoritmo es polinomial por ser el anterior polinomial.
+
+\begin{center}
+\includegraphics[width=1\textwidth]{bipartito.jpg}
+\end{center}
+
+
+\section{Ejercicio 12B}
+\par Sabemos que el problema de decisión 3-COLEQ es NP-C. Queremos probar que el probema COLEQ es NP-Hard. Para eso es suficiente con probar que 3-COLEQ es reducible en tiempo polinomial a COLEQ.
+\par Claramente si, pues la instancia queda igual; y dada la respuesta de COLEQ símplemente chequeamos si es menor o igual a tres para responder si o no. (tiempo polinomial)
+\par Análogamente, COLEQ limitado a las instancias de grafos 3-regulares es NP-hard pues reducimos el problema 3-COLEQ limitado a grafos 3-regulares (que sabemos que es NP-Completo), de la misma forma que hicimos antes, a COLEQ en grafos 3-regulares.
+
+
+\end{document}

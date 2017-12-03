@@ -1,0 +1,322 @@
+\documentclass {article} 
+
+\usepackage{lmodern}
+\usepackage [spanish] {babel} 
+\usepackage [T1]{fontenc}
+\usepackage [latin1]{inputenc}
+\usepackage{amsthm} % para poder usar newtheorem
+\usepackage{cancel} %Para poder hacer el simbolo "no es consecuencia semántica" etc.
+\usepackage{graphicx} 
+\usepackage{amsmath} %para poder usar mathbb
+\usepackage{amsfonts} %sigo intentando usar mathbb
+\usepackage{amssymb} %therefore
+\usepackage{ mathabx } %comillas
+\usepackage{ verbatim } 
+\theoremstyle{remark}
+\newtheorem{thm}{Teorema}
+\newtheorem{lem}{Lema}[section]
+\newtheorem{cor}{Corolario}[section]
+\newtheorem{deff}{Definición}[section]
+\newtheorem{obs}{Observación}[section]
+\newtheorem{ej}{Ejercicio}[section]
+\newtheorem{ex}{Ejemplo}[section]
+\newtheorem{alg}{Algoritmo}[section]
+\usepackage[latin1]{inputenc} 
+\usepackage{listings}
+\usepackage{verbatim}
+\usepackage{hyperref}
+\usepackage{proof}
+\usepackage{anysize}
+\marginsize{3cm}{3cm}{3cm}{3cm}
+\usepackage{tikz}
+
+
+\begin{document} 
+
+
+
+\begin{titlepage}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
+
+\center % Center everything on the page
+ 
+%----------------------------------------------------------------------------------------
+%	HEADING SECTIONS
+%----------------------------------------------------------------------------------------
+
+\textsc{\Large Facultad de Ciencias Exactas, Ingeniería y Agrimensura}\\[1.5cm] % Name of your university/college
+
+\textsc{ Tópicos Avanzados en Optimización Combinatoria y Teoría de Grafos}\\[0.5cm] % Minor heading such as course title
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\HRule \\[0.4cm]
+{ \huge \bfseries PRÁCTICA 2}\\[0.4cm] % Title of your document
+\HRule \\[1.5cm]
+ 
+%----------------------------------------------------------------------------------------
+%	AUTHOR SECTION
+%----------------------------------------------------------------------------------------
+
+%\begin{minipage}{0.4\textwidth}
+%\begin{flushleft} \large
+%\emph{Autor:}\\
+%Rodríguez Jeremías % Your name
+%\end{flushleft}
+%\end{minipage}
+
+%\begin{minipage}{0.4\textwidth}
+%\begin{flushright} \large
+%\emph{Profesor:} \\
+%Mauro Jaskelioff % Supervisor's Name
+%\end{flushright}
+%\end{minipage}\\[4cm]
+
+% If you don't want a supervisor, uncomment the two lines below and remove the section above
+\Large \emph{Alumno: Rodríguez Jeremías}\\
+
+
+%----------------------------------------------------------------------------------------
+%	DATE SECTION
+%----------------------------------------------------------------------------------------
+
+{\large \today}\\[3cm] % Date, change the \today to a set date if you want to be precise
+
+%----------------------------------------------------------------------------------------
+%	LOGO SECTION
+%----------------------------------------------------------------------------------------
+
+%\includegraphics{Logo}\\[1cm] % Include a department/university logo - this will require the graphicx package
+ 
+%----------------------------------------------------------------------------------------
+
+\vfill % Fill the rest of the page with whitespace
+
+\end{titlepage}
+
+\section{Ejercicio 2}
+Sea $(S,I)$ un sistema independiente. Demostraré  $M2 \Rightarrow M2' \Rightarrow M2'' \Rightarrow M2$. \\
+
+\underline{$M2 \Rightarrow M2'$)} \\
+
+\par $|F_1| < |F_2|$. Supongamos que $\forall \ e \ \in \ F_2 - F_1 \ , \ F_1 \cup \{e \} \notin I$. Entonces, $F_1$ es maximal de $F_1 \cup  F_2$. Además, $F_2$ o bien es maximal de $F_1 \cup F_2$, o bien está contenido en $F' \subset F_1 \cup F_2$ con $F'$ maximal en $F_1  \cup F_2$. \\
+
+Luego, por M2,  $|F'| = |F_1|$. Pero $|F'| \geq |F_2|  \Rightarrow |F_1| \geq |F_2|$. Absurdo.\\
+
+\begin{flushright} $\therefore \exists \ e \ \in \ F_2 - F_1 \ , \ F_1 \cup \{e \} \in I$ \end{flushright} 
+
+\underline{$M2' \Rightarrow M2''$)} \\
+
+\par Supongamos que J es independiente maximal de A, pero no es máximo: 
+
+\begin{center}
+$\exists J' \in I  \ | \ J'\subset A \ \wedge \ |J'|>|J| $
+\end{center}
+
+Luego, por hipótesis:
+\begin{center}
+$\exists \ e \ \in \ (J' - J) \subset A \  | \ J \cup \{e \} \in I$
+\end{center}
+\par Entonces:
+
+\begin{center}
+$\exists \ e \ \in \  A \  | \ J \cup \{e \} \in I$
+\end{center}
+
+Luego J no es maximal en A. Absurdo.
+
+\begin{flushright} $\therefore \ J$ es máximo en A \end{flushright} 
+
+\underline{$M2'' \Rightarrow M2$)} \\
+
+\par Supongamos que tenemos dos independientes maximales en A: $J_1$ y $J_2$. Por hipótesis ambos serán máximos en A. Luego $|J_1|\leq |J_2| \leq |J_1|$.  \\
+
+\begin{flushright} $\therefore \ |J_1| = |J_2|$ \end{flushright} 
+
+
+\section{Ejercicio 3} Sea $G=(V_1 \cup V_2, E)$ bipartito.
+\subsection{Apartado A} Veamos que $(E, \{ M\subseteq E \ | \ M $ es matching de $G \})$ es un SI. 
+
+\begin{itemize}
+\item $\emptyset$ es un matching de $G$, pues al no haber aristas tampoco habrá ninguna con vértices en común.
+\item Sea $M$ un matching de $G$ y $M' \subset M$. $M'$ seguirá siendo un matching, pues si en M ningún arista tenía vértices en común, tampoco sucederá en un subconjunto de M.
+\end{itemize} 
+
+Este sistema independiente no es matroide. Consideremos el siguiente grafo: \\
+
+
+
+\begin{center}
+\begin{tikzpicture}
+    \node[shape=circle,draw=black] (D) at (0,0) {D};
+    \node[shape=circle,draw=black] (A) at (0,2) {A};
+    \node[shape=circle,draw=black] (C) at (2,0) {C};
+    \node[shape=circle,draw=black] (B) at (2,2) {B};
+
+    \draw (A) to (B);
+    \draw (A) to (D);
+    \draw (C) to (D);
+
+\end{tikzpicture}
+\end{center}
+
+\par Vemos que $M_1 = \{ ad \} $ y $M_2 = \{ ab, \ dc \}$ son matchings tales que $|M_1| < |M_2|$ y no podemos agregar aristas de $M_2$ a $M_1$ manteniendo la propiedad de matching. \\
+
+
+
+ \begin{flushright} $\therefore$ Es un sistema independiente no matroide. \end{flushright}
+\subsection{Apartado B} Veamos que $(S,I_1)$ es matroide. ($(S,I_2)$ es análogo).
+\begin{itemize}
+\item $\emptyset \in I_1$ pues al no haber aristas, tampoco hay dos incidentes en el mismo vértice de $V_1$.
+\item Sea $ A \in I_1$ y $A' \subset A$. Supongamos que  $A' \notin I_1$. Luego hay dos aristas en $A'$ incidentes en el mismo vértice de $V_1$. Luego ambas aristas están en $A$ y resulta $A \notin I_1$. Absurdo. Entonces, $A' \in I_1$.
+\item Sean $A_1, A_2 \in I_1$ tales que $|A_1|<|A_2|$. Sean $V_1(A_i) \subseteq V_1, \ i=1,2 $ los vértices $v$ de $V_1$ tales que existe alguna arista en $A_i$ incidente en $v$.\\
+Como $|A_1|<|A_2|$, entonces $ |V_1(A_1)| < |V_1(A_2)| $. Tomamos un $v \in V_1(A_2) - V_1(A_1)$, y consideramos la arista $e$ de $A_2$ incidente en $v$. Entonces  $A_1 \cup \{ e\} \in I_1$. \\
+Por ejemplo:
+\begin{center}
+\begin{tikzpicture}
+    \node[shape=circle,draw=black] (A) at (0,4) {A};
+    \node[shape=circle,draw=black] (B) at (0,3) {B};
+    \node[shape=circle,draw=black] (C) at (0,2) {C};
+    \node[shape=circle,draw=black] (D) at (0,1) {D};
+    \node[shape=circle,draw=black] (E) at (0,0) {E};
+    \node[shape=circle,draw=black] (F) at (3,4) {F};
+    \node[shape=circle,draw=black] (G) at (3,2) {G};
+    \node[shape=circle,draw=black] (H) at (3,0) {H};
+    
+    
+    \draw (A) to (F);
+    \draw (A) to (G);
+    \draw (B) to (F);
+    \draw (C) to (G);
+    \draw (D) to (H);
+    \draw (D) to (G);
+    \draw (E) to (H);
+    
+
+
+\end{tikzpicture}
+\end{center}
+	$A_1 = \{ ag, \ bf, \ cg, \ dh, \ eh \}$ y $V_1(A_1) = \{a,b,c,d,e\}$\\
+	$A_2 = \{ af, \ dh, \ eh \}$ y $V_1(A_2) = \{a,d,e\}$\\	
+	
+	Tomamos, por ejemplo, $cg$ y podemos extender $A_1$.
+\end{itemize}
+
+\subsection{Apartado C}
+Debo probar $I_M = I_1 \cap I_2$. Veamos la doble contención:\\
+
+\underline{$\subseteq)$} Sea $M \in I_M$ un matching de G. Entonces, no hay dos aristas en M que incidan en el mismo vértice de $V_1$, pues $M$ no sería matching; luego $M \in I_1$. Análogamente, no hay dos aristas en M que incidan en el mismo vértice de $V_2$, pues $M$ no sería matching; luego $M \in I_2$. \\
+\begin{flushright}
+$\therefore M \in I_1 \cap I_2$
+\end{flushright}
+
+\underline{$\supseteq)$} Sea $M \in I_1 \cap I_2$. Supongamos que no es matching. Entonces hay un vertice en el cual inciden dos aristas de $M$. El vértice está en $V_i$ con $i \in \{1,2\}$. Entonces, $M \notin I_i$. Entonces, $M \notin I_1 \cap I_2$. Absurdo.
+\begin{flushright}
+$\therefore M \in I_M$
+\end{flushright}
+
+\section{Ejercicio 8}
+\subsection{Apartado A}
+Sea $G=(V,E)$ un grafo de linea. Entonces, existe $G^* = (V^*,E^*)$ tal que:
+
+\begin{eqnarray}
+&&V=E^* \\
+&&e_1e_2 \in E \Leftrightarrow e_1 \ y \  e_2 \ comparten \ un \ extremo \ en \ G^*
+\end{eqnarray}
+
+Sea $V'\subseteq V$. Debo probar que el subgrafo inducido(por nodos) por $V'$, llamémoslo H, es un grafo de linea. Es decir, debo hallar un $H^*$ tal que:  
+
+\begin{itemize}
+\item $V'= E(H^*)$
+\item $e_1e_2 \in E(H) \ \Leftrightarrow \ e_1$ y $e_2$ comparten un extremo en $H*$ 
+\end{itemize}
+
+Propongo como $H^*$ al subgrafo de $G^*$ inducido por el subconjunto de aristas $V' \subseteq V=E^*$ 
+
+
+\begin{itemize}
+\item $V(H) = E(H^*)$ por la forma en que definimos $H^*$.
+\item Sea un arista $w_1w_2 \in E(H)$. En particular,  $w_1w_2 \in E(G)$. Luego, $w1, w2 \in E(G^*)$ y tienen un extremo en común en $G^*$. Como $w_1$ y $w_2$ están en $V'$, sus extremos formarán partes de los vértices de $H^*$ y en particular el extremo que comparten también. Luego, $w_1$ y $w_2$ tienen un extremo en común en $H^*$.
+\end{itemize} 
+
+\begin{flushright}
+$H$ es grafo de linea; ser de linea es una propiedad hereditaria.
+\end{flushright}
+\subsection{Apartado B} 
+\par Sea G un grafo de línea. Voy a suponer, sin perder generalidad, que es conexo (en caso de no serlo, podemos aplicar el razonamiento siguiente sobre sus componentes conexas) y tiene al menos tres vértices (en el caso de un solo vértice, la partición deseada será el conjunto vacío; en el caso de dos vértices unidos por un arista, la partición deseada será la única arista) \\ 
+
+
+\begin{center}
+\includegraphics[width=0.87\textwidth]{linea1.eps}
+\end{center}
+
+
+\par Para formar una partición de $E(G)$,  considero el grafo $G^*$. Por cada vértive $v \in V(G^*)$, defino el conjunto de todas las aristas incidentes en él: 
+
+\begin{center}
+$ I_v = \{e \ \in E(G^*) \ |$  e  es  incidente  en $ v \} \subseteq V(G)$.  
+\end{center} 
+
+Todas esas aristas, vistas como vértices de G, inducen un subgrafo $G(I_v)$ en G. Notaré como $E_v$ al conjunto de aristas de este subgrafo:
+\begin{center}
+ $E_v = E(G(I_v))$
+\end{center}
+
+\begin{center}
+\includegraphics[width=0.87\textwidth]{linea2.eps}
+\end{center}
+
+
+\par Propongo $\mathcal{P}= \{  E_v \ | \ v \in V(G^*) \ \wedge \ E_v \neq \emptyset \} $ como la partición buscada. Informalmente, $\mathcal{P}$ se forma tomando cada vértice $v$ en $G^*$, considerando todas las aristas que inciden en él  -viéndolas como conjunto de vértices en $G$- y agregando el conjunto de las aristas que unen estos vértices de $G$ como un elemento de la partición. \\
+
+\begin{center}
+\includegraphics[width=0.5\textwidth]{linea3.eps}
+\end{center}
+
+\par Para completar el ejercicio debo probar:
+\begin{enumerate}
+\item $\mathcal{P}$ es efectivamente una partición de $E(G)$
+\item Cada conjunto de $\mathcal{P}$ es una clique en $G$
+\item Cada vértice en $G$ pertence a lo sumo a dos de las cliques definidas por $\mathcal{P}$ .
+\end{enumerate} 
+
+1. Veamos que $\mathcal{P}$ es una partición de $E(G)$. \\ 
+\begin{itemize}
+
+\item \underline{$E_i \neq \emptyset$}: En la definición de $\mathcal{P}$ pedimos expresamente que sus elementos sean no vacíos. Esto es porque si $v\in V(G^*)$ es un vértice colgante, $E_v$ será vacío.  
+\item \underline{$ \bigcup_{E_i\in \mathcal{P}} E_i = E(G)$}: Para esto veamos que todo elemento  $e \in E(G)$ pertenece a algún $E_i$. 
+
+\begin{eqnarray}
+\nonumber &&e \in E(G) \\
+\nonumber &\Rightarrow & e = v_1v_2  \ \ v_2v_3 \\
+\nonumber &\Rightarrow & v_1v_2, \  v_2v_3 \ son \ aristas \ incidentes \ a \ v_2 \ en \ G^* \\
+\nonumber &\Rightarrow & v_1v_2, \ v_2v_3 \ \in I_{v_2} \\
+\nonumber &\Rightarrow & e = v_1v_2 \ \  v_2v_3 \in E_{v_2} \in \mathcal{P}
+\end{eqnarray}
+
+\item \underline{$ v_i \neq v_j \ \Rightarrow \ E_{v_i} \cap E_{v_j} = \emptyset$}: Supongamos: 
+
+\begin{eqnarray}
+\nonumber && E_{v_i} \cap E_{v_j} \neq \emptyset \\
+\nonumber &\Rightarrow & \exists \ e \ | \ e \in E_{v_i} \wedge  \ e \in E_{v_j} \\
+\nonumber &\Rightarrow & \exists \ e \ |\  e = v_i u \ \ v_i w \wedge  \ e \in E_{v_j} \\
+\nonumber &\Rightarrow & \exists \ e \ |\  e = v_i v_j \ \ v_i v_j 
+\end{eqnarray}
+
+Esto es absurdo pues un arista de G no puede tener esa forma, ya que $v_i v_j$ no es adyacente a si misma en $G^*$.
+
+\end{itemize}
+
+2. Veamos que cada conjunto $E_{v_i}$ de la partición es una clique en $G$. Para ello tomamos dos vértices $v_iu, \ v_iw \ \in E_{v_i}$. Como ambos vértices corresponden a aristas de $G^*$ que comparten el extremo $v_i$, serán adyacentes en $G$.
+
+3. Consideremos un vértice $a = uv \in V(G)$. ¿A cuántas de cliques de las cliques definidas por $\mathcal{P}$ puede pertenecer como máximo? 
+\par Recordemos que ese vértice $a$ corresponde a un arista en $G^*$ de extremos $u$ y $v$. Entonces, $a$ puede estar a lo sumo en $I_v$ y en $I_u$ y en ningún otro $I_i$ (pues toda arista tiene dos extremos). Consecuentemente, $a$ solo podrá estar en $G(I_v)$ o (inclusivo) en $G(I_u)$. 
+
+\subsection{Apartado C}
+Este ejercicio lo escaneé en papel porque necesitaba hacer muchos dibujos.
+
+
+\end{document}

@@ -1,0 +1,584 @@
+\documentclass {article} 
+
+\usepackage{lmodern}
+\usepackage [spanish] {babel} 
+\usepackage [T1]{fontenc}
+\usepackage [latin1]{inputenc}
+\usepackage{amsthm} % para poder usar newtheorem
+\usepackage{cancel} %Para poder hacer el simbolo "no es consecuencia semántica" etc.
+\usepackage{graphicx} 
+\usepackage{amsmath} %para poder usar mathbb
+\usepackage{amsfonts} %sigo intentando usar mathbb
+\usepackage{amssymb} %therefore
+\usepackage{ mathabx } %comillas
+\usepackage{ verbatim } 
+\theoremstyle{remark}
+\newtheorem{thm}{Teorema}
+\newtheorem{lem}{Lema}[section]
+\newtheorem{cor}{Corolario}[section]
+\newtheorem{deff}{Definición}[section]
+\newtheorem{obs}{Observación}[section]
+\newtheorem{ej}{Ejercicio}[section]
+\newtheorem{ex}{Ejemplo}[section]
+\newtheorem{alg}{Algoritmo}[section]
+\usepackage[latin1]{inputenc} 
+\usepackage{listings}
+\usepackage{verbatim}
+\usepackage{hyperref}
+\usepackage{proof}
+\usepackage{anysize}
+\marginsize{3cm}{3cm}{3cm}{3cm}
+\usepackage{tikz}
+
+
+\begin{document} 
+
+
+
+\begin{titlepage}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
+
+\center % Center everything on the page
+ 
+%----------------------------------------------------------------------------------------
+%	HEADING SECTIONS
+%----------------------------------------------------------------------------------------
+
+\textsc{\Large Facultad de Ciencias Exactas, Ingeniería y Agrimensura}\\[1.5cm] % Name of your university/college
+
+\textsc{ Tópicos Avanzados en Optimización Combinatoria y Teoría de Grafos}\\[0.5cm] % Minor heading such as course title
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\HRule \\[0.4cm]
+{ \huge \bfseries Programación Lineal}\\[0.4cm] % Title of your document
+\HRule \\[1.5cm]
+ 
+%----------------------------------------------------------------------------------------
+%	AUTHOR SECTION
+%----------------------------------------------------------------------------------------
+
+%\begin{minipage}{0.4\textwidth}
+%\begin{flushleft} \large
+%\emph{Autor:}\\
+%Rodríguez Jeremías % Your name
+%\end{flushleft}
+%\end{minipage}
+
+%\begin{minipage}{0.4\textwidth}
+%\begin{flushright} \large
+%\emph{Profesor:} \\
+%Mauro Jaskelioff % Supervisor's Name
+%\end{flushright}
+%\end{minipage}\\[4cm]
+
+% If you don't want a supervisor, uncomment the two lines below and remove the section above
+\Large \emph{Alumnos: Meli Sebastián, Rodríguez Jeremías}\\
+
+
+%----------------------------------------------------------------------------------------
+%	DATE SECTION
+%----------------------------------------------------------------------------------------
+
+{\large \today}\\[3cm] % Date, change the \today to a set date if you want to be precise
+
+%----------------------------------------------------------------------------------------
+%	LOGO SECTION
+%----------------------------------------------------------------------------------------
+
+%\includegraphics{Logo}\\[1cm] % Include a department/university logo - this will require the graphicx package
+ 
+%----------------------------------------------------------------------------------------
+
+\vfill % Fill the rest of the page with whitespace
+
+\end{titlepage}
+
+\section{Ejercicio 1C: Dieta de McDonalds}
+\subsection{Apartado 1}
+Utilizamos el software LPSolve para hallar el costo buscado. Utilizamos las siguientes variables: 
+
+\begin{flushleft}
+$x_1:$ Cantidad de Cuartos de Libra con queso a comprar  \\
+$x_2:$ Cantidad de McNificas con queso a comprar  \\
+$\ldots$  \\
+$x_9:$ Cantidad de jugos de naranja a comprar 
+
+\end{flushleft}
+
+
+Y formalizamos el problema como la minimización de:
+
+\begin{center} $\sum_{i=1}^9{x_i * Precio_i}$ \end{center}
+ 
+Sujeto a 8 desigualdades indicando los nutrientes necesarios que aporta cada compra y las cotas correspondientes. El problema en formato lp es el siguiente: \\
+
+\begin{verbatim}
+/* Objective function */
+min: 1.84 x1 + 2.19 x2 + 1.84 x3 + 1.44 x4 + 2.29 x5 + 0.77 x6 + 1.29 x7 + 0.60 x8 + 0.72 x9;
+
+/* Variable bounds */
+
+510 x1 + 370 x2 + 500 x3 + 370 x4 + 400 x5 + 220 x6 + 345 x7 + 110 x8 + 80 x9 >= 2000;
+34 x1  + 35 x2  + 42 x3 + 38 x4 + 42 x5 + 26 x6 + 27 x7 + 12 x8 + 20 x9 >= 350;
+34 x1  + 35 x2  + 42 x3 + 38 x4 + 42 x5 + 26 x6 + 27 x7 + 12 x8 + 20 x9 <= 375;
+28 x1  + 24 x2  + 25 x3 + 14 x4 + 31 x5 + 3 x6   + 15 x7 + 9 x8 + 1 x9 >= 55;
+15 x1  + 15 x2  + 6 x3 + 2 x4 + 8 x5 + 0 x6     + 4 x7 + 10 x8 + 2 x9 >= 100;
+6 x1   + 10 x2  + 2 x3 + 0 x4 + 15 x5 + 15 x6  + 0 x7 + 4 x8 + 120 x9 >= 100;
+30 x1  + 20 x2  + 25 x3 + 15 x4 + 15 x5 + 0 x6 + 20 x7 + 30 x8 + 2 x9 >= 100;
+20 x1  + 20 x2  + 20 x3 + 10 x4 + 8 x5 + 2 x6  +  15 x7 + 0 x8 + 2 x9 >= 100;
+x1>=0;
+x2>=0;
+x3>=0;
+x4>=0;
+x5>=0;
+x6>=0;
+x7>=0;
+x8>=0;
+x9>=0;
+\end{verbatim}
+
+El resultado obtenido es:
+
+\begin{center}
+\includegraphics[width=0.33\textwidth]{ej1a.jpg}
+\end{center}
+
+
+Es decir, el precio mínimo es US\$ 14.85.
+
+\subsection{Apartado 2}
+
+La cantidad de calorías es (truncando algunos decimales):\\
+
+\begin{center} 4.385 * 510 + 6.147 * 220 + 3.422 * 110 = 3965.11 \end{center}
+
+\subsection{Apartado 3}
+Agregamos la restricción indicada:\\
+
+\begin{verbatim}
+510 x1 + 370 x2 + 500 x3 + 370 x4 + 400 x5 + 220 x6 + 345 x7 + 110 x8 + 80 x9 >= 2500;
+\end{verbatim}
+
+Y obtenemos el siguiente resultado:\\
+
+
+\begin{center}
+\includegraphics[width=0.38\textwidth]{ej1c.jpg}
+\end{center}
+Sale un poco más caro intentar comer menos calorías en McDonalds.
+\subsection{Apartado 4}
+Reformulamos el problema como sigue:\\
+
+\begin{verbatim}
+/* Objective function */
+min: 1.84 x1 + 2.19 x2 + 1.84 x3 + 1.44 x4 + 2.29 x5 + 0.77 x6 + 1.29 x7 + 0.60 x8 + 0.72 x9;
+
+/* Variable bounds */
+
+510 x1 + 370 x2 + 500 x3 + 370 x4 + 400 x5 + 220 x6 + 345 x7 + 110 x8 + 80 x9 <= 2000;
+34 x1  + 35 x2  + 42 x3 + 38 x4 + 42 x5 + 26 x6 + 27 x7 + 12 x8 + 20 x9 >= 350;
+34 x1  + 35 x2  + 42 x3 + 38 x4 + 42 x5 + 26 x6 + 27 x7 + 12 x8 + 20 x9 <= 375;
+28 x1  + 24 x2  + 25 x3 + 14 x4 + 31 x5 + 3 x6   + 15 x7 + 9 x8 + 1 x9 >= 55;
+15 x1  + 15 x2  + 6 x3 + 2 x4 + 8 x5 + 0 x6     + 4 x7 + 10 x8 + 2 x9 >= 100;
+6 x1   + 10 x2  + 2 x3 + 0 x4 + 15 x5 + 15 x6  + 0 x7 + 4 x8 + 120 x9 >= 100;
+30 x1  + 20 x2  + 25 x3 + 15 x4 + 15 x5 + 0 x6 + 20 x7 + 30 x8 + 2 x9 >= 100;
+20 x1  + 20 x2  + 20 x3 + 10 x4 + 8 x5 + 2 x6  +  15 x7 + 0 x8 + 2 x9 >= 100;
+
+x1>=0;
+x2>=0;
+x3>=0;
+x4>=0;
+x5>=0;
+x6>=0;
+x7>=0;
+x8>=0;
+x9>=0;
+\end{verbatim}
+
+El software no logra encontrar una solución, dado que el problema es insatisfactible. La comida de McDonalds tiene demasiadas calorías.
+
+\subsection{Apartado 5}
+Para hallar la menor cantidad de calorías con que podemos satisfascer nuestras necesidades nutricionales, reformulamos el problema como sigue:\\
+\begin{verbatim}
+/* Objective function */
+min: 510 x1 + 370 x2 + 500 x3 + 370 x4 + 400 x5 + 220 x6 + 345 x7 + 110 x8 + 80 x9 ;
+/* Variable bounds */
+
+34 x1  + 35 x2  + 42 x3 + 38 x4 + 42 x5 + 26 x6 + 27 x7 + 12 x8 + 20 x9 >= 350;
+34 x1  + 35 x2  + 42 x3 + 38 x4 + 42 x5 + 26 x6 + 27 x7 + 12 x8 + 20 x9 <= 375;
+28 x1  + 24 x2  + 25 x3 + 14 x4 + 31 x5 + 3 x6   + 15 x7 + 9 x8 + 1 x9 >= 55;
+15 x1  + 15 x2  + 6 x3 + 2 x4 + 8 x5 + 0 x6     + 4 x7 + 10 x8 + 2 x9 >= 100;
+6 x1   + 10 x2  + 2 x3 + 0 x4 + 15 x5 + 15 x6  + 0 x7 + 4 x8 + 120 x9 >= 100;
+30 x1  + 20 x2  + 25 x3 + 15 x4 + 15 x5 + 0 x6 + 20 x7 + 30 x8 + 2 x9 >= 100;
+20 x1  + 20 x2  + 20 x3 + 10 x4 + 8 x5 + 2 x6  +  15 x7 + 0 x8 + 2 x9 >= 100;
+
+x1>=0;
+x2>=0;
+x3>=0;
+x4>=0;
+x5>=0;
+x6>=0;
+x7>=0;
+x8>=0;
+x9>=0;
+\end{verbatim}
+
+Y obetenemos el siguiente resultado:\\
+
+
+\begin{center}
+\includegraphics[width=0.33\textwidth]{ej1e.jpg}
+\end{center}
+
+Reafirmando nuestro resultado del apartado anterior, donde queríamos satisfascer las necesidades nutricionales con solo 2000 calorías.
+
+\subsection{Apartado 6}
+
+Agregamos las siguientes restricciones:\\
+
+\begin{verbatim}
+x1 <= 2;
+x2 <= 2;
+x3 <= 2;
+x4 <= 2;
+x5 <= 2;
+x6 <= 2;
+x7 <= 2;
+x8 <= 2;
+x9 <= 2;
+\end{verbatim}
+
+
+Y repetimos los apartados anteriores con estas restricciones para completar la segunda fila de la siguiente tabla:\\
+
+\begin{table}[h]
+\centering
+
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+Dieta Variada & Costo mínimo & Calorías p/ costo mínimo & Calorías mínimas & Costo p/ calorías mínimas \\
+\hline
+No            & 14.85        & 3965.11                    & 2466.98          & 16.74                       \\
+
+\hline
+Si            & 16.76        & 3793.95                    & 3488.28          & 17.23                    \\
+\hline
+\end{tabular}
+\end{table}
+
+
+
+
+\section{Ejercicio 3}
+Sea un problema de PL:
+\begin{eqnarray}
+\nonumber &&max \ c x \\
+\nonumber &&s/a \ A x \leq b, \ x  \geq 0
+\end{eqnarray}
+
+Sea $\{ \hat{x_i} \ : \ \hat{x_i} = (x_{i_1}, x_{i_2} , \ldots , x_{i_n}) , \ i=1, \ldots, s \}$ un conjunto de $s$ soluciones óptimas de PL con $c \hat{x_i} =k$. Sea $\lambda = (\lambda_1, \ldots, \lambda_s) \ / \ \sum_{i=1}^s \lambda_i = 1 $ \\
+\par Sea $x^* = \sum_{i=1}^s \lambda_i \hat{x_i}$. Por definición de $x^*$ observemos que su componente i-ésima es $x^*_i=\sum_{j=1}^s \lambda_j x_{j_i} $. Veamos que $x^*$ es solución óptima de PL.
+
+\par En primer lugar, veamos que es solución. Es decir, que satisface las restricciones del problema.\\
+\par Sea una restricción cualquiera del problema: 
+
+\begin{center}
+$a_1x_1 + a_2x_2 + \ldots + a_nx_n \leq b \  \Leftrightarrow \ \sum_{i=1}^n a_i x_i \leq b$
+\end{center}
+
+ Veamos que $x^*$ la satisface. \\
+
+\begin{eqnarray}
+\nonumber & & \sum_{i=1}^n a_i x^*_i\\  
+\nonumber &=& <Def \  de \ x^*>\\
+\nonumber & & \sum_{i=1}^n a_i (\sum_{j=1}^s \lambda_j x_{j_i})\\
+\nonumber &=& \\
+\nonumber & & \sum_{i=1}^n  \sum_{j=1}^s a_i \lambda_j x_{j_i}\\
+\nonumber &=& \\
+\nonumber & &  \sum_{j=1}^s \sum_{i=1}^n  a_i \lambda_j x_{j_i}\\
+\nonumber &=& \\
+\nonumber & &  \sum_{j=1}^s \lambda_j (\sum_{i=1}^n  a_i  x_{j_i})\\
+\nonumber &\leq & <Cada \ \hat{x}_i \ cumple \ la \ restricción> \\
+\nonumber & &  \sum_{j=1}^s \lambda_j b\\
+\nonumber &=& \\
+\nonumber & & b \sum_{j=1}^s \lambda_j \\
+\nonumber &=& \\
+\nonumber & & b\  1 \\
+\nonumber &=& \\
+\nonumber & & b \\
+\end{eqnarray}
+
+Luego $x^*$ satisface todas las restricciones, y es solución de PL. Veamos ahora que es óptima: \\
+
+\begin{eqnarray}
+\nonumber & & c \ x^*\\  
+\nonumber &=& <Def \  de \ x^*>\\
+\nonumber & & c \ \sum_{j=1}^s \lambda_j \hat{x}_j\\
+\nonumber &=& \\
+\nonumber & & \sum_{i=1}^n  c_i \ \sum_{j=1}^s  \lambda_j x_{j_i}\\
+\nonumber &=& \\
+\nonumber & & \sum_{i=1}^n   \sum_{j=1}^s c_i  \lambda_j x_{j_i}\\
+\nonumber &=& \\
+\nonumber & & \sum_{j=1}^s \sum_{i=1}^n    c_i  \lambda_j x_{j_i}\\
+\nonumber &=& \\
+\nonumber & & \sum_{j=1}^s \lambda_j \sum_{i=1}^n    c_i   x_{j_i}\\
+\nonumber &=&\\ 
+\nonumber & & \sum_{j=1}^s \lambda_j \ c \ \hat{x}_j\\
+\nonumber &=& \\
+\nonumber & & \sum_{j=1}^s \lambda_j k\\
+\nonumber &=& \\
+\nonumber & & k \sum_{j=1}^s \lambda_j \\
+\nonumber &=& \\
+\nonumber & & k \ 1  \\
+\nonumber &=& \\
+\nonumber & & k 
+\end{eqnarray}
+
+\begin{flushright} $\therefore$ $x^*$ es solución óptima.
+\end{flushright}
+
+\section{Ejercicio 6E}
+
+Sean $c=(c_1, \ldots, c_n)$ y $1\leq k \leq n$, $k$ entero. Queremos hallar:\\
+
+\begin{eqnarray}
+\nonumber &&max \ c x \\
+\nonumber &s/a&\\
+\nonumber & &  0 \leq x \leq 1 \\
+\nonumber & & \sum_{i=1}^n x_i \leq k
+\end{eqnarray}
+
+Vamos a suponer que el vector c está ordenado de forma decreciente ($c_i \geq c_{i+1}, \ 1 \leq i \leq n-1$). Suponer esto no nos hace perder generalidad, pues siempre podemos reordenar la sumatoria usando la conmutatividad de la suma.
+
+Sea $p$ = max $\ \{m \  | \ c_{m} > 0 \}$ y $d = $min$(p,k)$. Planteamos la siguiente solución (claramente factible) $x^*$:\\
+
+
+\begin{center}
+
+
+$x^*_{m}$  =  $\left\{ \begin{array}{lcc}
+     		        1 &     si  & 1\leq m \leq d \\
+      		       \\ 0 &  si & d+1 \leq m \leq n
+     		        \end{array}
+  				 \right.$
+   
+\end{center}
+
+\par Cualquier otra solución factible  $y$ puede formarse a partir de $x^*$ aplicando a cada componente desde la primera hasta la d-ésima exactamente una de las siguientes operaciones:
+
+\begin{enumerate}
+\item No hacer nada
+\item Restarle una cantidad t menor a 1
+\item Restarle una cantidad t menor a 1 y repartirla entre las componentes $d+1, d+2, ... , n$. Formalmente esto significa elegir un $\lambda \in \mathbb{R}^{n-d}$ tal que $\sum_{i=d+1}^{n} \lambda_i = t$ y sumarle $\lambda_i$ a cada componente correspondiente.
+\end{enumerate}
+
+De esta forma, aplicando exáctamente una operación de izquierda a derecha a cada una de las primeras $d$ componentes de $x^*$ podemos generar cualquier otra solución factible \footnote{Para ser rigurosos, deberíamos excluír y analizar antes algunas soluciones factibles en el caso m < k. En este caso, habrá soluciones factibles que no estamos considerando: aquellas que ponen $x_i$ negativo a $c_i$ negativo cuando m<k. Estas soluciones a pesar de ser factibles no las tenemos en cuenta porque al poner $x_i$ positivo a un $c_i$ negativo, estan restando valor a la función objetivo y claramente no pueden ser óptimas}.\\
+
+Veamos que, si tenemos una solución factible $x$ y le aplicamos cualquiera de estas operaciones, el vector resultante $y$ no mejorará el resultado de la función target. Supongamos entonces que aplicamos una operación en la componente $x_p$. Analicemos qué sucede con cáda una de las tres posibles:
+
+\begin{enumerate}
+\item Si no hacemos nada, el resultado será el mismo. $(c x = c y)$
+\item Si aplicamos la segunda operación, el nuevo resultado será peor. Observemos que $c_p > 0$ ya que esta operación se está aplicando sobre una componente entre 1 y $d$. Al multiplicar $c_p >0$  ahora por un valor menor, estará reportando menor beneficio a la función objetivo. $(c x > c y)$
+\item Si le restamos t y lo distribuímos entre las otras, perderemos $t.c_p$ ganancia en la solución final y sumaremos $\sum_{i=d+1}^{n} \lambda_i c_i \leq \sum_{i=d+1}^{n} \lambda_i c_p = c_p \sum_{i=d+1}^{n} \lambda_i = c_p . t  $. Es decir, no sumaremos más de lo que perdemos:\\
+
+
+\end{enumerate}
+\begin{center}
+$ c y = c x - t c_p + \sum_{i=d+1}^{n} \lambda_i c_i \leq c x - t c_p + t c_p = c x $
+\end{center}
+
+Por lo tanto, aplicar una operación de estas tres no mejora el resultado. Dada una solución factible cualquiera $y$, que como ya discutimos puede generarse mediante $d$ operaciones a partir de $x*$, no mejorará el resultado.
+
+\begin{flushright} $\therefore$ $x^*$ es óptima. \end{flushright}
+
+
+
+\begin{comment} Seba Jere solución que no anda
+Para probar esto, consideremos la siguiente afirmación para cada i:
+
+\begin{center}
+$P(i)$ : $ 1 \leq i \leq n \Rightarrow  \sum_{j=1}^i c_j y_j \leq  \sum_{j=1}^i c_j x^*_j$
+\end{center}
+
+Es decir, el costo que va a acumulando la solución $x^*$ hasta la variable $i$ es mayor que el de la solución $y$. Luego si vale $P(n)$, ya demostramos que es óptimo. Veámoslo por inducción:\\
+
+\underline{Caso base}: P(1). Analizamos dos situaciones posibles. Si $c_1\leq 0$, entonces:
+
+\begin{center}
+$c_1 \ x_1^* = 0 \geq c_1 \ y_1, \ \ \ \forall \  y_1 \in [0,1]$
+\end{center}
+
+\par El otro caso es $c_1 >0$:
+
+\begin{center}
+$c_1 \ x_1^* = c_1 \geq c_1 \ y_1, \ \ \ \forall \  y_1 \in [0,1]$
+\end{center} 
+
+
+\underline{Paso inductivo} Suponemos P(i) y deseamos probar:
+
+\begin{center}
+$\sum_{j=1}^{i+1} c_j y_j \leq  \sum_{j=1}^{i+1} c_j$
+\end{center}
+
+Analizaremos distintos casos. \\
+
+\underline {Subcaso $c_{i+1}\leq 0$}: Entonces, por HI la suma acumulada hasta i es mayor para $x^*$ que para $y$. En este paso, como $x_{i+1}^*$ es 0, la suma sigue siendo la misma que en $P(i)$. La solución $y$ puede tener $y_i > 0$, en cuyo caso su suma acumulada será peor que la del paso i, o $y_i=0$ en cuyo caso la suma será igual. En ambos casos, por HI, la suma acumulada de $x^*$ es mayor o igual. \\
+\underline {Subcaso $c_{i+1} > 0 \ \wedge \ x_{i+1}=0$} Si $y_{i+1}=0$, entonces por HI vale P(i+1). Si $y_{i
+1} > 0$, debemos probar lo siguiente: 
+
+
+\begin{center}
+$\sum_{j=1}^{i+1} c_j y_j \leq  \sum_{j=1}^{i+1} c_j x^*_j = \sum_{j=1}^{k} c_j x^*_j $
+\end{center}
+
+Sabemos que $\sum_{j=1}^{i+1} y_j \leq k$, por una de las restricciones del problema. Desarrollemos esta desigualdad:
+
+\begin{center}
+$\sum_{j=1}^{i+1} y_j \leq k \Leftrightarrow (\sum_{j=1}^{i} y_j)  + y_{i+1} \leq k \Leftrightarrow (\sum_{j=1}^{i} y_j)   \leq k - y_{i+1}$
+\end{center}
+
+Esto significa coloquialmente que, en los pasos anteriores la solución $y$ no "gastó" todo su k. Es decir, existe un subconjunto de pasos anteriores (en particular de los primeros k) en los que $y_i < 1$. Sea $J = \{i \in \{1 \ldots k \} \ | \ y_i < 1 \}$ \\
+Entonces, podemos decir que "lo que se guardó la solución $y$ hasta el k-ésimo paso es al menos lo que usa en el (i+1)-ésimo paso":
+\begin{center}
+$ \sum_{j \in J} (1 - y_j) \geq  y_{i+1}$
+\end{center} 
+Veamos entonces que esta desigualdad implica P(i+1):
+
+\begin{eqnarray}
+\nonumber & & \sum_{j \in J} (1 - y_j) \geq  y_{i+1} \\  
+\nonumber &\Rightarrow & ( c_{i+1}>0 \ \wedge \ c_j \geq c_{i+1} ) \\
+\nonumber & & \sum_{j \in J} \frac{c_j}{c_{i+1}} (1 - y_j) \geq  y_{i+1}  \\
+\nonumber &\Rightarrow & (agregamos \ los \ y_j=1; \ pasamos \ multiplicando \ el \ factor \ común) \\
+\nonumber & & \sum_{j =1}^i c_j (1 - y_j) \geq c_{i+1} \ y_{i+1} \\
+\nonumber &\Rightarrow & (distribuímos \ c_j; \ partimos  \ la \ sumatoria \ y \ pasamos \ sumando  \\
+\nonumber & & \sum_{j=1}^i c_j  \geq (\sum_{j=1}^i c_j y_j ) + c_{i+1} \ y_{i+1} \\
+\nonumber &\Rightarrow &  \\
+\nonumber & & \sum_{j=1}^i c_j  \geq c\ y
+MAL. Esto solo nos sirve si la sumatoria de la izquierda va hasta k.
+\end{eqnarray}
+\end{comment}
+
+
+\section{Ejercicio 7}
+Nuestro problema es: \\
+
+\begin{eqnarray}
+\nonumber &&max \ c x \\
+\nonumber &s/a&\\
+\nonumber & &  0 \leq x \leq 1 \\
+\nonumber & & \sum_{i=1}^n x \leq k
+\end{eqnarray}
+
+Y su dual es: \\
+
+\begin{eqnarray}
+\nonumber &&min \ (\sum_{i=1}^n y_i) + y_{n+1}k \\
+\nonumber &s/a&\\
+\nonumber & &  y_i + y_{n+1} \geq c_i, \ \forall \ 1 \leq i \leq n \\
+\nonumber & &  y\geq 0
+\end{eqnarray}
+\par Recordemos que $x^*$ está definido igual que en el problema anterior; y seguimos bajo la hipótesis del problema anterior de que c está ordenado.
+\par Definiré $y^* \in \mathbb{R}^{n+1}$ por casos:
+
+\underline{Caso d=k} Es decir, el vector c tiene al menos k valores positivos. Para este caso, habíamos definido $x^*=(1_1,1_2,\ldots,1_{k-1},1_k,0,\ldots,0)$ y definimos  $y^*$ como sigue
+
+\begin{center}
+
+$y^*_{i}$  =  $\left\{ \begin{array}{lcc}
+     		        c_i - c_d &     si  & 1\leq i \leq d \\
+     		        0         &     si  & d+1 \leq i \leq n \\
+      		        c_d       &     si  &  i= n+1
+     		        \end{array}
+  				 \right.$
+
+\end{center}
+
+
+\par Veamos que esta $y^*$ es una solución factible del dual:
+
+\begin{itemize}
+\item Para $i\leq d$,   $ \ y_i + y_{n+1} = c_i - c_d + c_d = c_i \geq c_i$.
+\item Para $i> d$,   $ \ y_i + y_{n+1} = y_{n+1} = c_d \geq c_i$ pues $d \leq i$ y $c$ está ordenado.
+\end{itemize}
+
+\par Veamos ahora cuanto vale la función objetivo en $y^*$:
+\begin{center}
+$ b y^* = (\sum_{i=1}^k (c_i - c_d) ) + k c_d =\sum_{i=1}^k (c_i - c_d + c_d) = \sum_{i=1}^k c_i = c x^*$
+
+\end{center}
+
+
+\underline{Caso d=m} Es decir, el vector c tiene m<k valores positivos. En este caso habíamos definido $x^*=(1_1,1_2,\ldots,1_{m-1},1_m,0,\ldots,0)$ y definimos $y^*$ como sigue:
+
+\begin{center}
+
+$y^*_{i}$  =  $\left\{ \begin{array}{lcc}
+     		        c_i       &     si  & 1\leq i \leq m \\
+     		        0         &     si  & m+1 \leq i \leq n+1\\
+     		        \end{array}
+  				 \right.$
+
+\end{center}
+
+
+\par Veamos que esta $y^*$ es una solución factible del dual:
+
+\begin{itemize}
+\item Para $i\leq m$,   $ \ y_i + y_{n+1} = c_i \geq c_i$.
+\item Para $i > m$,     $ \ y_i + y_{n+1} = 0 \geq c_i$ pues $c_i$ es negativo.
+\end{itemize}
+
+\par Veamos ahora cuanto vale la función objetivo en $y^*$:
+\begin{center}
+$ b y^* = (\sum_{i=1}^m c_i )  = c x^*$
+
+\end{center}
+
+
+Por lo tengo, hemos obtenido un $y^*$ (definido en función del problema) que es solu1ción factible del dual tal que $b.y^* =  c.x^*$.
+
+\begin{flushright}
+$\therefore$ $x^*$ óptima.
+\end{flushright}
+
+
+\section{Ejercicio 9}
+Formalizamos el problema de la planta frigorífica como sigue:
+
+\begin{verbatim}
+/* Objective function */
+max: 8 j + 4 l + 4 s + 14 ja + 12 la + 13 sa + 11 je + 7 le + 9 se ;
+
+/* Variable bounds */
+
+j  + ja + je <= 480; // produccion de jamon        R1 - 8 - [40 , .. ]
+l  + la + le <= 400; // produccion de lomos        R2 - 5 - [190, 420]
+s  + sa + se <= 230; // produccion de salchichones R3 - 6 - [20 , 270]
+ja + sa + la <= 420; // ahumado                    R4 - 7 - [400, 630]
+je + se + le <= 250; // ahumado extra              R5 - 3 - [210, 690]
+
+\end{verbatim}
+
+\begin{itemize}
+\item ¿Cuál es el producto que más promete ganancias?
+ \par  El producto que mas promete ganancias es el jamón (8), comparado con el lomo (5) y el salchichón (6)
+ \par La empresa estaría dispuesta a invertir en la produccion del jamon, siempre y cuando producir una unidad mas de jamón no tenga un costo mayor a 8, ya que en ese caso sería contraproducente
+\item ¿Hasta cuánto estaría dispuesta la empresa a invertir de manera que esta inversión resulte rentable?
+  En este caso, como el rango no tiene limite $( [40 , \ldots ] )$, la empresa podría invertir hasta que el costo de producir una unidad mas de jamon no tenga un costo mayor a 8 (que es la ganancia por cada unidad vendida)
+\item ¿Cuál sería la pérdida monetaria si la empresa debe reducir en 10 unidades la capacidad de ahumar sus productos en tiempo normal?
+\par Como la restricción del ahumado tiene estos valores:
+  R4 - 7 - [400, 630]
+\par Vemos que mientras el valor (420 actualmente) se mantenga en el rango 400 - 630, el valor de cada unidad de ahumado es de 7.
+  Esto quiere decir que restar 10 unidades (410, sigue en el rango), produciría un cambio en la ganancia de la empresa de
+  
+ \begin{center} (-10)*7 = -70 \end{center}
+  Es decir, una pérdida de 70
+
+\end{itemize}
+
+\end{document}

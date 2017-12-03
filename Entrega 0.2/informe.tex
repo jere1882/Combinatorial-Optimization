@@ -1,0 +1,214 @@
+\documentclass {article} 
+
+\usepackage{lmodern}
+\usepackage [spanish] {babel} 
+\usepackage [T1]{fontenc}
+\usepackage [latin1]{inputenc}
+\usepackage{amsthm} % para poder usar newtheorem
+\usepackage{cancel} %Para poder hacer el simbolo "no es consecuencia semántica" etc.
+\usepackage{graphicx} 
+\usepackage{amsmath} %para poder usar mathbb
+\usepackage{amsfonts} %sigo intentando usar mathbb
+\usepackage{amssymb} %therefore
+\usepackage{ mathabx } %comillas
+\usepackage{ verbatim } 
+\theoremstyle{remark}
+\newtheorem{thm}{Teorema}
+\newtheorem{lem}{Lema}[section]
+\newtheorem{cor}{Corolario}[section]
+\newtheorem{deff}{Definición}[section]
+\newtheorem{obs}{Observación}[section]
+\newtheorem{ej}{Ejercicio}[section]
+\newtheorem{ex}{Ejemplo}[section]
+\newtheorem{alg}{Algoritmo}[section]
+\usepackage[latin1]{inputenc} 
+\usepackage{listings}
+\usepackage{verbatim}
+\usepackage{hyperref}
+\usepackage{proof}
+\usepackage{anysize}
+\marginsize{3cm}{3cm}{3cm}{3cm}
+\usepackage{tikz}
+\usepackage{ stmaryrd }
+
+\begin{document} 
+
+
+
+\begin{titlepage}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
+
+\center % Center everything on the page
+ 
+%----------------------------------------------------------------------------------------
+%    HEADING SECTIONS
+%----------------------------------------------------------------------------------------
+
+\textsc{\Large Facultad de Ciencias Exactas, Ingeniería y Agrimensura}\\[1.5cm] % Name of your university/college
+
+\textsc{ Tópicos Avanzados en Optimización Combinatoria y Teoría de Grafos}\\[0.5cm] % Minor heading such as course title
+
+%----------------------------------------------------------------------------------------
+%    TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\HRule \\[0.4cm]
+{ \huge \bfseries PRÁCTICA 0.2}\\[0.4cm] % Title of your document
+\HRule \\[1.5cm]
+ 
+%----------------------------------------------------------------------------------------
+%    AUTHOR SECTION
+%----------------------------------------------------------------------------------------
+
+%\begin{minipage}{0.4\textwidth}
+%\begin{flushleft} \large
+%\emph{Autor:}\\
+%Rodríguez Jeremías % Your name
+%\end{flushleft}
+%\end{minipage}
+
+%\begin{minipage}{0.4\textwidth}
+%\begin{flushright} \large
+%\emph{Profesor:} \\
+%Mauro Jaskelioff % Supervisor's Name
+%\end{flushright}
+%\end{minipage}\\[4cm]
+
+% If you don't want a supervisor, uncomment the two lines below and remove the section above
+\Large \emph{Alumno: Rodríguez Jeremías}\\
+
+
+%----------------------------------------------------------------------------------------
+%    DATE SECTION
+%----------------------------------------------------------------------------------------
+
+{\large \today}\\[3cm] % Date, change the \today to a set date if you want to be precise
+
+%----------------------------------------------------------------------------------------
+%    LOGO SECTION
+%----------------------------------------------------------------------------------------
+
+%\includegraphics{Logo}\\[1cm] % Include a department/university logo - this will require the graphicx package
+ 
+%----------------------------------------------------------------------------------------
+
+\vfill % Fill the rest of the page with whitespace
+
+\end{titlepage}
+\section{Ejercicio 3A} 
+Dados los parámetros $A \in \mathbb{R}^{m \times n}; \ b, c \in \mathbb{R}^n$ y $x^* \in \{0,1\}^n$ del problema, realizamos dos formulaciones en programación lineal entera:
+
+\begin{flushleft}
+ \underline{Primer formulación:}
+\end{flushleft}
+
+
+\begin{eqnarray}
+\nonumber && min \ c x \\
+\nonumber &s/a&\\
+\nonumber & &  Ax \leq b  \\
+\nonumber & & x_i \in \mathbb{Z}, \ \ \ \ \ \ \ \ \forall \ i \in \{1, \ldots, n\} \\
+\nonumber & & 0 \leq x_i \leq q  \ \ \ \ \forall \ i \in \{1, \ldots, n\} \\
+\nonumber & &\sum_{i=1}^n ( (x_i . x_i^*)+ ( (1-x_i).(1-x_i^*)) ) < n
+\end{eqnarray}
+
+
+En esta última desigualdad, cada término de la sumatoria vale 1 si la componente i-ésima de $x$ es igual a la de $x^*$; y 0 en caso contrario. De este modo, la última restricción impone que no todas las componentes sean iguales; es decir, que $x \neq x^*$.
+
+\begin{flushleft}
+ \underline{Segunda formulación:}
+\end{flushleft}
+
+
+\section{Ejercicio 7}
+Claramente:
+\begin{equation*}  
+dom(\Pi)=\{(0,0,0,0),(0,0,0,1),(0,0,1,0),(0,0,1,1),(0,1,0,0),(0,1,0,1),(1,0,0,0)\} =  dom(\Pi')
+\end{equation*}
+\par Además, $\Pi$ y $ \Pi'$ tienen la misma función objetivo. Por lo tanto, son problemas equivalentes. \\
+\par Sea $P$ el poliedro dominio de la relajación lineal de $\Pi$, y $P'$ el de $\Pi'$. Para probar que $\Pi'$ es una mejor formulación que $\Pi$, veamos que $P' \subset P$.\\
+\par Sea $(x_1,x_2,x_3,x_4) \in P'$. Luego, $4x_1+3x_2+2x_3+x_4 \leq 4$. Equivalentemente, $100 x_1+75 x_2+50 x_3+25 x_4 \leq 100$, de donde se deduce $83 x_1+61 x_2+49 x_3+20 x_4 \leq 100$. 
+\par Además, $(\frac{6}{5} ,0,0,0)\in (P - P')$.
+
+\begin{flushright} $\therefore P' \subset P$ \end{flushright}
+
+\newpage
+\section{Ejercicio 8.a}
+
+Realizamos la siguiente formulación del problema en formato lp:
+
+\begin{verbatim}
+/* Variables */
+
+// xj : cantidad de jamones no ahumados producidos
+// xl : cantidad de lomos no ahumados producidos
+// xs : cantidad de salchichas no ahumadas producidas
+
+// xja: cantidad de jamones ahumados producidos (sin emplear horas extra)
+// xla: cantidad de lomos ahumados producidos (sin emplear horas extra)
+// xsa: cantidad de salchichas ahumadas producidas (sin emplear horas extra)
+
+// xje: cantidad de jamones ahumados en horas extra
+// xle: cantidad de lomos ahumados en horas extra
+// xse: cantidad de salchichas ahumadas en horas extra
+
+// j : se enciende la máquina J (variable de decisión, 0-1)
+// l : se enciende la máquina L (variable de decisión, 0-1)
+// s : se enciende la máquina S (variable de decisión, 0-1)
+
+/* Objective function */
+MAX: 8 xj + 4 xl + 4 xs + 14 xja + 12 xla + 13 xsa + 11 xje + 7 xle + 9 xse - 50j - 50l - 50s;
+
+/* Variable bounds */
+
+xj + xja + xje - 10 j <= 480;  // Producción de jamones
+xl + xla + xle - 40 l <= 400;  // producción de lomos
+xs + xsa + xse - 20 s <= 230;  // producción de salchichas
+
+xja + xla + xsa <= 420;       // capacidad de ahumado
+xje + xle + xse <= 250;       // capacidad de ahumado extra
+
+xj  >=0;
+xja >=0;
+xje >=0;
+xl  >=0;
+xla >=0;
+xle >=0;
+xs  >=0;
+xsa >=0;
+xse >=0;
+
+0 <= j <= 1;
+0 <= s <= 1;
+0 <= l <= 1;
+                     //         J L S
+j + l + s <= 2;      // evita   1 1 1
+j <= l + s;          // evita   1 0 0
+l <= j + s;          // evita   0 1 0
+
+int j;
+int s;
+int l;
+\end{verbatim}
+
+Usando LPSolve, obtuvimos que el valor máximo de la función objetivo es $11110$ para la siguiente asignación de valores:
+
+\begin{verbatim}
+xj = 480
+xl = 20
+xs = 0
+xja = 0
+xla = 420
+xsa = 0
+xje = 0
+xle = 0
+xse = 250
+j = 0
+l = 1
+s = 1
+\end{verbatim}
+
+
+
+\end{document}

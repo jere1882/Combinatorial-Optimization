@@ -1,0 +1,328 @@
+\documentclass {article} 
+
+\usepackage{lmodern}
+\usepackage [spanish] {babel} 
+\usepackage [T1]{fontenc}
+\usepackage [latin1]{inputenc}
+\usepackage{amsthm} % para poder usar newtheorem
+\usepackage{cancel} %Para poder hacer el simbolo "no es consecuencia semántica" etc.
+\usepackage{graphicx} 
+\usepackage{amsmath} %para poder usar mathbb
+\usepackage{amsfonts} %sigo intentando usar mathbb
+\usepackage{amssymb} %therefore
+\usepackage{ mathabx } %comillas
+\usepackage{ verbatim } 
+\theoremstyle{remark}
+\usepackage[latin1]{inputenc} 
+\usepackage{listings}
+\usepackage{verbatim}
+\usepackage{hyperref}
+\usepackage{proof}
+\usepackage{anysize}
+\marginsize{3cm}{3cm}{3cm}{3cm}
+\usepackage{tikz}
+
+\usepackage{ stmaryrd }
+\usepackage{ mathrsfs }
+
+\begin{document} 
+
+
+
+\begin{titlepage}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
+
+\center % Center everything on the page
+ 
+%----------------------------------------------------------------------------------------
+%    HEADING SECTIONS
+%----------------------------------------------------------------------------------------
+
+\textsc{\Large Facultad de Ciencias Exactas, Ingeniería y Agrimensura}\\[1.5cm] % Name of your university/college
+
+\textsc{ Tópicos Avanzados en Optimización Combinatoria y Teoría de Grafos}\\[0.5cm] % Minor heading such as course title
+
+%----------------------------------------------------------------------------------------
+%    TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\HRule \\[0.4cm]
+{ \huge \bfseries PRÁCTICA 5}\\[0.4cm] % Title of your document
+DESCOMPOSICIÓN MODULAR, CLIQUE-WIDTH Y MSOL
+\HRule \\[1.5cm] 
+
+%----------------------------------------------------------------------------------------
+%    AUTHOR SECTION
+%----------------------------------------------------------------------------------------
+
+%\begin{minipage}{0.4\textwidth}
+%\begin{flushleft} \large
+%\emph{Autor:}\\
+%Rodríguez Jeremías % Your name
+%\end{flushleft}
+%\end{minipage}
+
+%\begin{minipage}{0.4\textwidth}
+%\begin{flushright} \large
+%\emph{Profesor:} \\
+%Mauro Jaskelioff % Supervisor's Name
+%\end{flushright}
+%\end{minipage}\\[4cm]
+
+% If you don't want a supervisor, uncomment the two lines below and remove the section above
+\Large \emph{Alumno: Rodríguez Jeremías}\\
+
+
+%----------------------------------------------------------------------------------------
+%    DATE SECTION
+%----------------------------------------------------------------------------------------
+
+{\large \today}\\[3cm] % Date, change the \today to a set date if you want to be precise
+
+%----------------------------------------------------------------------------------------
+%    LOGO SECTION
+%----------------------------------------------------------------------------------------
+
+%\includegraphics{Logo}\\[1cm] % Include a department/university logo - this will require the graphicx package
+ 
+%----------------------------------------------------------------------------------------
+
+\vfill % Fill the rest of the page with whitespace
+
+\end{titlepage}
+
+\section{Ejercicio 4} Para resolver este ejercicio, usaré los siguientes lemas:\\
+
+\textbf{Lema 1:} Sea G un grafo. Entonces: $\chi_{\rho}(G) \leq |V|-\alpha(G)+1  $\\
+
+d/ Sea S un conjunto estable de cardinal máximo en G. Como todos sus vértices son no adyacentes, estarán a distancia mayor que 1 entre si. Por lo tanto, un $\rho$-coloreo válido es aquel que colorea todos los vértices del conjunto S con el color 1; y usa $|V-S|$ colores distintos para los vértices restantes, pintándolos todos de colores diferentes. \\
+\par Por lo tanto, hemos encontrado un $\rho$-coloreo que usa  $|V-S|+1 = |V|-\alpha(G)+1$ colores distintos:
+
+\begin{center}
+$\chi_{\rho}(G) \leq |V|-\alpha(G)+1  $
+\end{center}
+
+\textbf{Lema 2:} Sea G un grafo. Entonces: $diam(G) \leq 2 \Rightarrow \chi_{\rho}(G) = |V|-\alpha(G)+1  $\\
+
+d/ En un grafo de diámetro 2, la distancia máxima entre dos vértices cualesquiera es 2. Por lo tanto, en un $\rho$-coloreo, el único color que es posible repetir es el color 1. (Si usaramos un color más grande en dos vértices distintos, necesitaríamos que su distancia fuera mayor que 2). \\
+\par Luego, el $\rho$-coloreo que use la menor cantidad de colores será aquel que pueda repetir más veces el color 1. La forma de hacer esto es encontrar un conjunto estable de cardinal máximo, pintar todos sus vértices de color 1, y luego elegir un color nuevo para cada vértice restante. Por lo tanto:
+  \begin{center}
+$\chi_{\rho}(G) = |V|-\alpha(G)+1  $
+\end{center} 
+  
+\subsection{Apartado A}
+
+Sea el grafo araña $A_r^0$, donde $C=\{ c_1, \ldots , c_r \} $ es el cuerpo y $S = \{ s_1, \ldots, s_r \}$ son las patas. Veamos que $diam(A_r^0) = 2$:
+
+\begin{itemize}
+\item Si $u,v \in C$, como $C=K_r$, entonces $dist(u,v)=1$.
+\item Si $u,v \in S$, entonces $u=s_j$ y $v=s_k$ para algún $j,k; \ j \neq k$. Por definición de araña gruesa, ambos vértices serán adyacentes a $c_m$ para todo $m \in \{1, \ldots, r\} \setminus \{j,k\}$. Entonces, $dist(u,v)=2$.
+\item Si $u=s_j \in S$ y $v=c_k \in C$, entonces debemos analizar dos casos. Si $j \neq k$, entonces $dist(u,v)=1$. Si $j = k$, entonces $dist(u,v)=2$, pues $s_j$ y $c_k$ serán adyacentes a algún otro $c_m$ del cuerpo.
+\end{itemize}
+
+Además, el mayor conjunto estable de la araña es S (las r patas). \\
+
+Luego, por el lema 2:
+
+\begin{center}
+$\chi_{\rho}(A_r^0) = |V|-\alpha(A_r^0)+1 = 2r - r + 1 = r+1 $
+\end{center}
+
+
+\subsection{Apartado C}
+
+Sea el grafo araña $A_r^k$, donde $C=\{ c_1, \ldots , c_r \} $ es el cuerpo, $S = \{ s_1, \ldots, s_r \}$ son las patas y $H=A_r^{k-1}$ es la cabeza.\\ 
+
+Veamos, por inducción en k, que las siguientes proposiciones son ciertas:
+
+\begin{flushleft} $P_1(k)$: $diam(A_r^k)=2$  \end{flushleft}
+
+\begin{flushleft}\underline{Caso base} En el apartado A discutimos que $P_1(0)$ es válida.\\ \end{flushleft}
+\underline{Paso inductivo} Supongamos cierta $P_1(k)$, y consideremos dos vértices $u$ y $v$ de $A_r^{k+1}$.
+\begin{enumerate}
+\item Si ambos están en H, por hipótesis inductiva  $dist(u,v)\leq 2$. 
+\item Si ambos están en $ S \cup C $, con el mismo análisis que se hizo en el apartado A, se cumple que $dist(u,v)\leq 2$.
+\item Si $u$ está en H y $v$ en $C$. Por definición de araña gruesa, como $u$ será adyacente a todos los vértices de $C$, $dist(u,v)=1$.
+\item Si $u$ está en H y $v=s_k$ en $S$, entonces ambos serán adyacentes a algún $c_j$ con $j\neq k$. Por lo tanto, $dist(u,v)=2$.
+\end{enumerate}
+
+\begin{flushright}
+$\therefore diam(A_r^{k+1})\leq 2$
+\end{flushright}
+
+
+\begin{flushleft} $P_2(k)$: $\alpha(A_r^k)= (k+1)r$ \end{flushleft}
+
+\underline{Caso base}
+En el apartado A discutimos que  $P_2(0)$ es válida. \\
+
+\underline{Paso inductivo}
+Ahora supongamos cierta $P_2(k)$. Como $A_r^{k}$ es un subgrafo de $A_r^{k+1}$, sigue que $\alpha(A_r^{k+1}). \geq \alpha(A_r^{k})$. 
+\par Sea $E$ un estable de cardinal máximo en $A_r^{k+1}$. Observemos que si algún $c \in C$ estuviera en $E$, entonces $|E|$=1 y no sería de cardinal máximo. Por lo tanto, ningún vértice del cuerpo está en $E$.\par Luego, $E$ deberá estar formado por vértices de $S \cup H$. Dado que todo vértice de $S$ es no adyacente a todo vértice de $H$, $E$ estará formado por un conjunto estable de cardinal máximo en $H$ junto a otro de cardinal máximo en $S$.
+\par Por hipótesis inductiva, el cardinal del primero es $(k+1)r$, y como todo $S$ es estable, el cardinal del segundo es $r$. 
+\begin{flushright}
+$\therefore \alpha(A_r^{k+1}) = (k+1) r + r = (k+2) r$
+\end{flushright}
+
+Luego de estos dos resultados, podemos aplicar el lema 2 a $A_r^k$ pues su diámetro es a lo sumo dos, concluyendo lo siguiente:
+
+\begin{center}
+$\chi_{\rho}(A_r^k) = |V|- \alpha(A_r^k) + 1 = (k+1)2r - (k+1) r + 1 = (k+1)r + 1 $
+\end{center}
+
+
+\subsection{Apartado B}
+Como caso particular del apartado C, $\chi_{\rho}(A_5^2) = 3*5 + 1 = 16$
+
+\section{Ejercicio 6}
+\subsection{Apartado A}
+Sean $G_1, G_2$ y $S(G_1), S(G_2)$ conjuntos estables de peso máximo respectivamente. Entonces:
+
+\begin{itemize}
+\item Un conjunto estable de peso máximo en $G_1 \oplus G_2$ es $E = S(G_1) \cup S(G_2)$. Veamos que es de peso máximo: Sea $E'$ otro conjunto estable en $G_1 \oplus G_2$. Consideramos $E' \cap V(G_1)$ y $E' \cap V(G_2)$, una partición de $E'$. Cada uno de estos subconjuntos de $E'$ tiene tanto peso como $E \cap V(G_1)$ y $E \cap V(G_2)$ respectivamente \footnote{por definición de $E$ y dado que $S(G_1)$ Y $S(G_2)$ son estables de peso máximo en $G_1$ y en $G_2$}. Por lo tanto, $E'$ tiene a lo sumo tanto peso como $E$.
+
+\item Un conjunto estable de peso máximo en $G_1 \vee G_2$ es el que más peso tenga de entre $S(G_1)$ y $S(G_2)$. Dado que al realizar la operación de join se crea una arista entre cada par $u,\ v \ | \ u\in V(G_1) \ v \ \in \ V(G_2)$, un conjunto estable en $G_1 \vee G_2$ claramente no podrá contener vértices de $G_1$ y de $G_2$ a la vez. Por lo tanto, un conjunto estable en en $G_1 \vee G_2$ es un conjunto estable en $G_1$ o bien un conjunto estable en $G_2$. Si deseamos maximizar el peso, entonces elegimos el de mayor peso de estos.
+\end{itemize}
+
+\subsection{Apartado B} Sean dos grafos $G_1$ y $G_2$, y $f_i : V(G_i) \mapsto \{1, \ldots, \chi(G_i) \}, \ i=1,2$ dos coloreos (óptimos) de $G_1$ y $G_2$ respectivamente.
+\begin{itemize}
+\item Al calcular $\chi(G_1 \oplus G_2)$, dado que $G_1$ y $G_2$ son subgrafos inducidos de $\chi(G_1 \oplus G_2)$; tenemos las siguiente cota:
+\begin{center}$\chi(G_1 \oplus G_2) \geq max \{ \chi(G_1), \chi(G_2) \}$ \end{center}
+\par Además, el siguiente es un coloreo válido:
+
+\begin{eqnarray}
+\nonumber f(x) &:& V(G_1 \oplus G_2) \mapsto \{1, \ldots, max \{ \chi(G_1) , \chi(G_2) \}\} \\
+\nonumber f(x) &=& \left\{ \begin{array}{lcc}
+             f_1(x)            &  si &  x \in V(G_1) \\
+             f_2(x)            &  si &  x \in V(G_2) 
+             \end{array}
+   \right. 
+\end{eqnarray}
+
+\begin{flushright}
+$\therefore \chi(G_1 \oplus G_2) = max \{ \chi(G_1), \chi(G_2) \}$ 
+\end{flushright}
+\item $\chi(G_1 \vee G_2) =\chi(G_1) + \chi(G_2)$, pues ningún color usado en un vértice de $G_1$ puede repetirse en uno de $G_2$. Entonces necesitaremos colorear ambos por separado con la menor cantidad de colores posible, y sin mezclar colores: 
+
+\begin{eqnarray}
+\nonumber f(x) &:& V(G_1 \vee G_2) \mapsto \{1, \ldots, \chi(G_1) + \chi(G_2) \} \\
+\nonumber f(x)&=& \left\{ \begin{array}{lcc}
+             f_1(x)               &  si &  x \in V(G_1) \\
+             f_2(x) + \chi(G_1)   &  si &  x \in V(G_2) 
+             \end{array}
+   \right. 
+\end{eqnarray}
+
+
+\end{itemize}
+
+\subsection{Apartado C}
+
+Sea G= $(\{ v_1 \} \oplus \{ v_2 \}) \vee ( \{ v_3 \} \vee (\{v_4\}  \oplus \{v_5\} ) )$:
+\begin{center}
+\begin{tikzpicture}[main_node/.style={circle,fill=blue!20,draw,minimum size=0.57cm,inner sep=0pt}]
+
+    \node[main_node] (1) at (0,0) {$v_3$};
+    \node[main_node] (2) at (-1, -1.5)  {$v_4$};
+    \node[main_node] (3) at (1, -1.5) {$v_5$};
+    \node[main_node] (4) at (-2, -2) {$v_1$};    
+    \node[main_node] (5) at (2, -2) {$v_2$};
+    
+    \draw (1) -- (2);
+    \draw (1) -- (3);
+    \draw (4) -- (1);
+    \draw (4) -- (2);
+    \draw (4) -- (3);    
+    \draw (5) -- (1);
+    \draw (5) -- (2);
+    \draw (5) -- (3);   
+\end{tikzpicture}
+\end{center}
+
+Los pasos para calcular $\chi(G)$ son los siguientes:
+
+\begin{eqnarray}
+\nonumber && \chi( (\{ v_1 \} \oplus \{ v_2 \}) \vee ( \{ v_3 \} \vee (\{v_4\}  \oplus \{v_5\} ) ) ) = \\
+\nonumber && \chi( \{ v_1 \} \oplus \{ v_2 \} ) + \chi( \{ v_3 \} \vee (\{v_4\}  \oplus \{v_5\} ) ) =\\
+\nonumber && max \{ \chi( \{ v_1 \} ), \chi(\{ v_2 \})  \}+ \chi( \{ v_3 \} ) + \chi (\{v_4\}  \oplus \{v_5\}  )  = \\
+\nonumber && max \{ 1, 1 \}+ 1 + max \{ \chi( \{v_4\} ) , \chi ( \{v_5\}  ) \} = \\
+\nonumber && 1 + 1 + max \{ 1 , 1 \} = 3 
+\end{eqnarray}
+
+
+Asumiendo que la función de pesos es constante 1 para todos los vértices,  los pasos para calcular $S(G)$ son los siguientes:
+
+\begin{eqnarray}
+\nonumber && S( (\{ v_1 \} \oplus \{ v_2 \}) \vee ( \{ v_3 \} \vee (\{v_4\}  \oplus \{v_5\} ) ) ) = \\
+\nonumber && argmax_{ E = S(\{ v_1 \} \oplus \{ v_2 \}) , S(\{ v_3 \} \vee (\{v_4\}  \oplus \{v_5\} ))  } ( |E| ) = \\
+\nonumber && argmax_{ E = \{ v_1, v_2 \} , \{v_4, v_5\}} (|E|) =\\
+\nonumber && \{v_1,v_2\} 
+\end{eqnarray}
+
+
+\section{Ejercicio 11}
+Para probar que los grafos bipartitos tienen clique width no acotada, probaré que $\mathscr{F}_n \geq 2^{\frac{n^2}{4}}$.\\
+Sin pérdida de generalidad, asumiré que $n$ es par. Consideremos entonces, dados $n$ vértices etiquetados $\{1,\ldots,n\}$, el grafo $K_{\frac{n}{2},\frac{n}{2}}$ bipartito completo \footnote{Si n es impar, podemos trabajar con $K_{\lceil \frac{n}{2} \rceil ,\lfloor \frac{n}{2} \rfloor}$}  tal que en una bipartición están los vértices $\{1,\ldots,\frac{n}{2}\}$; y en la otra los vértices $\{ \frac{n}{2}+1, \ldots, n \}$. 
+\par Este grafo completo tendrá $\frac{n}{2} . \frac{n}{2}$ aristas. Cualquier subconjunto de estas aristas será un grafo bipartito etiquetado distinto.
+\par Dado que hay $2^{\frac{n^2}{4}}$ subconjuntos distintos de aristas, sigue que $\mathscr{F}_n \geq 2^{\frac{n^2}{4}}$; y los grafos bipartitos tienen clique width no acotada.\\
+
+\par Análogamente, consideremos ahora la familia de los grafos split. Con el mismo razonamiento, dados $n$ vértices, asumiendo $n$ par, consideremos el grafo split completo \footnote{http://www.graphclasses.org/classes/gc\_1242.html} etiquetado formado por una clique de tamaño $\frac{n}{2}$ y un conjunto independiente de tamaño $\frac{n}{2}$; donde hay una arista entre cada vértice de la clique y del conjunto independiente.
+\par Con el mismo razonamiento, tenemos $\frac{n^2}{4}$ aristas en este grafo split completo; y cualquier subconjunto de estas aristas que consideremos denotará un grafo split etiquetado de n vértices distinto.
+\par sigue que $\mathscr{F}_n \geq 2^{\frac{n^2}{4}}$; y los grafos split tienen clique width no acotada.\\
+
+\section{Ejercicio 12}
+Se desea expresar la propiedad de conexidad de un grafo en MSOL. La formulación que pensé es la siguiente:
+\begin{flushleft} X es un subconjunto de vértices no vacío: \end{flushleft}
+\begin{center} NE(X) = $\exists \ x , X(x) $  \end{center}
+(X,Y) es una partición de V(G): 
+\begin{center}2PART(X,Y) = $(\forall \ x , \ X(x) \vee Y(x)) \wedge $NE$(X) \wedge $NE$(Y) \wedge (\forall x \ \neg (X(x) \wedge Y(x))$ \end{center}
+G es conexo:
+\begin{center}
+CON' = $\forall X \ \forall Y ,$ 2PART(X,Y) $ \Rightarrow (\exists x \ \exists y, \ X(x) \wedge Y(y) \wedge$ ady$(x,y)$ )
+\end{center}
+Sin embargo, el grafo conexo que consiste en un único vértice aislado no cumple esta proposición, y para solucionarlo se agrega el caso particular con una disyunción:\\
+\begin{center}
+CON = CON' $\vee$ ($\forall x \ \forall y \ (x=y))$
+\end{center}
+
+Sea G=(V,E). Veamos a continuación una demostración informal de que CON es verdadero si y sólo si G es conexo. A continuación veamos la primera implicancia:
+\par Supongamos que CON es verdadera, y sean dos vértices distintos $x,y\ \in V$. Debemos probar que existe un camino que conecta $x$ con $y$. 
+\par ``Aplicamos'' CON a la partición (X,Y)=$(\{x\},V \setminus \{y\})$ ( que verifica 2PART(X,Y) ). Luego existirá algún vértice $v$ en $V \setminus \{y\}$ que sea adyacente a algún elemento de X. Si $v=y$, entonces, G es conexo. 
+\par Si no, entonces repetimos el proceso con X:=X $\cup \{v\}$ e Y:= Y $\setminus \{v\}$. De este modo, en una cantidad finita de pasos (porque la cantidad de vértices es finita), terminaremos agregando al vértice $y$ en X; y sabremos que hay un camino de $x$ a $y$ (pues todos los vértices que vamos agregando a X son aquellos alcanzables por $x$).
+\par Recíprocamente, supongamos que G=(V,E) es no conexo. Consideremos una de las componentes conexas de G, y sean $V_1$ sus vértices. Entonces 2PART($V_1$,$V\setminus V_1$) será verdadero, pero no verificará que hayan dos vértices adyacentes; por lo que CON será falso. 
+
+\par Por lo tanto, CON es una formulación correcta.
+
+
+\section{Ejercicio 16}
+La siguiente fórmula expresa la propiedad de que un grafo tiene un 3-coloreo en $MSOL(\tau_1)$:
+
+\begin{flushleft}
+$Ind(X) \equiv \forall u, v \ ((X(u) \wedge X(v)) \rightarrow \neg adj(u,v))$\\
+$Part(X,Y,Z) \equiv \forall v(X(v) \vee Y(v) \vee Z(v)) \wedge \neg \exists u ((X(u) \wedge Y(u)) \vee (X(u) \wedge Z(u)) \vee (Z(u) \wedge Y(u)))$ \\
+$3Col \equiv \exists X,Y,Z(Part(X,Y,Z)\wedge Ind(X) \wedge Ind(Y) \wedge Ind(Z))$
+\end{flushleft}
+
+Si bien en el apunte de cátedra sólo se menciona que los problemas de optimización expresables en LinEMSOL$(\tau_1)$ son polinomiales en grafos con clique-width acotado, no podemos aplicar este resultado directamente pues el problema del 3-coloreo es un problema de decisión. 
+\par En \cite{courcelle} se puede ver que los problemas de decisión expresables en MSOL$(\tau_1)$ son polinomiales en grafos con clique width acotado, y que los LinEMSOL son su equivalente para problemas de optimización\footnote{
+Sin embargo, no tengo claro como expresar un problema MSOL en LinEMSOL, dado que si la fórmula $\phi$ no tiene variables libres, la definición de LinEMSOL se vuelve confusa al calcularse el máximo del conjunto vacío.\\
+Una alternativa que se me ocurre es utilizar una variable libre ficticia en $\phi$, y una función $f: V \mapsto \mathbb{Z}$ constante de modo que el problema $3-COL$ quede bien definido en LinEMSOL.
+}. Lo mismo se expresa en \cite{wao}. Por lo tanto asumiré este resultado válido para resolver este ejercicio. 
+\par Los grafos distancia hereditarios tienen clique width acotado \footnote{http://graphclasses.org/classes/gc\_80.html}.  Por lo tanto, dado que 3-COL es un problema de decisión MSOL$(\tau_1)$, y que los grafos distancia hereditarios tienen clique-width acotada; sigue que la complejidad del problema es lineal en dicha familia.
+
+
+  \begin{thebibliography}{}
+
+  \bibitem{courcelle} B. Courcelle; J. A. Makowsky; U. Rotics {\em Linear Time Solvable Optimization Problems on Graphs of Bounded Clique-Width}  
+
+  \bibitem{wao}  Michaël Rao {\em MSOL partitioning problems on graphs of bounded treewidth and clique-width} 
+
+  \end{thebibliography}
+
+\end{document}
+
+
+
+
+

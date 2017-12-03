@@ -1,0 +1,276 @@
+\documentclass {article} 
+
+\usepackage{lmodern}
+\usepackage [spanish] {babel} 
+\usepackage [T1]{fontenc}
+\usepackage [latin1]{inputenc}
+\usepackage{amsthm} % para poder usar newtheorem
+\usepackage{cancel} %Para poder hacer el simbolo "no es consecuencia semántica" etc.
+\usepackage{graphicx} 
+\usepackage{amsmath} %para poder usar mathbb
+\usepackage{amsfonts} %sigo intentando usar mathbb
+\usepackage{amssymb} %therefore
+\usepackage{ mathabx } %comillas
+\usepackage{ verbatim } 
+\theoremstyle{remark}
+\newtheorem{thm}{Teorema}
+\newtheorem{lem}{Lema}[section]
+\newtheorem{cor}{Corolario}[section]
+\newtheorem{deff}{Definición}[section]
+\newtheorem{obs}{Observación}[section]
+\newtheorem{ej}{Ejercicio}[section]
+\newtheorem{ex}{Ejemplo}[section]
+\newtheorem{alg}{Algoritmo}[section]
+\usepackage[latin1]{inputenc} 
+\usepackage{listings}
+\usepackage{verbatim}
+\usepackage{hyperref}
+\usepackage{proof}
+\usepackage{anysize}
+\marginsize{3cm}{3cm}{3cm}{3cm}
+\usepackage{tikz}
+
+
+\begin{document} 
+
+
+
+\begin{titlepage}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
+
+\center % Center everything on the page
+ 
+%----------------------------------------------------------------------------------------
+%	HEADING SECTIONS
+%----------------------------------------------------------------------------------------
+
+\textsc{\Large Facultad de Ciencias Exactas, Ingeniería y Agrimensura}\\[1.5cm] % Name of your university/college
+
+\textsc{ Tópicos Avanzados en Optimización Combinatoria y Teoría de Grafos}\\[0.5cm] % Minor heading such as course title
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\HRule \\[0.4cm]
+{ \huge \bfseries PRÁCTICA 3}\\[0.4cm] % Title of your document
+\HRule \\[1.5cm]
+ 
+%----------------------------------------------------------------------------------------
+%	AUTHOR SECTION
+%----------------------------------------------------------------------------------------
+
+%\begin{minipage}{0.4\textwidth}
+%\begin{flushleft} \large
+%\emph{Autor:}\\
+%Rodríguez Jeremías % Your name
+%\end{flushleft}
+%\end{minipage}
+
+%\begin{minipage}{0.4\textwidth}
+%\begin{flushright} \large
+%\emph{Profesor:} \\
+%Mauro Jaskelioff % Supervisor's Name
+%\end{flushright}
+%\end{minipage}\\[4cm]
+
+% If you don't want a supervisor, uncomment the two lines below and remove the section above
+\Large \emph{Alumno: Rodríguez Jeremías}\\
+
+
+%----------------------------------------------------------------------------------------
+%	DATE SECTION
+%----------------------------------------------------------------------------------------
+
+{\large \today}\\[3cm] % Date, change the \today to a set date if you want to be precise
+
+%----------------------------------------------------------------------------------------
+%	LOGO SECTION
+%----------------------------------------------------------------------------------------
+
+%\includegraphics{Logo}\\[1cm] % Include a department/university logo - this will require the graphicx package
+ 
+%----------------------------------------------------------------------------------------
+
+\vfill % Fill the rest of the page with whitespace
+
+\end{titlepage}
+
+\section{Ejercicio 2}
+\subsection{Apartado A}
+Sea G conexo, y sea $T \subseteq E(G)$ un bosque maximal respecto a la cantidad de aristas. Es decir:
+
+\begin{center}
+
+  $ e \in E(G) \Rightarrow$  $T \cup \{e\}$ no es  
+\end{center}
+
+Supongamos que T no es un árbol. Entonces tiene al menos dos componentes conexas. Como el grafo $G$ es conexo, habrá alguna arista $e$ que conecta dos vértices de componentes distintas. 
+\par El arista $e$ cláramente no pertenece a T (pues une dos componentes distintas). Como ambas componentes son árboles, $T \cup \{e \}$ seguirá siendo un bosque (no podrá haber otro par de vértices conectados formando un ciclo).
+\par Luego, T no era bosque maximal, pues hallamos un bosque con más aristas. Absurdo.
+
+\begin{flushright}
+$\therefore T$ es árbol
+\end{flushright}
+
+
+
+\subsection{Apartado B}
+
+Sea $(G,c)$ una instancia del problema del arbol recubridor de menor peso. Asumo que $c$ es un vector de costos positivos asociado a cada arista y que G es conexo.
+
+\par Sea $m = max_{e \ \in E(G)} c_e$ es el máximo costo de una arista en c; y defino $c'$ tal que $c'_e = 1 + m - c_e$.  
+
+\par Hechas estas definiciones, propongo la siguiente reducción entre los dos problemas: 
+
+\begin{eqnarray}
+\nonumber f(G,c)&=&(G,c')  \\
+\nonumber h &=& id
+\end{eqnarray}
+
+
+Veamos que, efectivamente, es una reducción. Sea g un algoritmo que resuelve el problema del bosque de peso máximo. Debo probar que $h \circ g \circ f$ resuelve el problema del árbol recubridor de costo mínimo para (G,c).\\
+
+Es decir, debo demostrar que si $T \subseteq E(G)$ es un bosque de peso máximo en $G$ con costos $c'$, $T$ es un árbol de peso mínimo en $G$ con costos $c$.\\
+
+Como $G$ es conexo, $T$ será un árbol de peso máximo en $G$ con costos $c'$ (Apartado anterior). Supongamos que $T$ no es un árbol de peso mínimo en $G$ con costos $c$. Entonces existe otro árbol $T'$ tal que:
+
+\begin{center} $\sum_{e \in T'} c_e < \sum_{e \in T} c_e$ \end{center}
+
+Nótese que al ser árboles recubridores del mismo grafo, ambos tendrán la misma cantidad de aristas $n$. Por la desigualdad anterior se cumple: 
+
+\begin{center} $ n.(m+1) - \sum_{e \in T'} c_e > n.(m+1) - \sum_{e \in T} c_e$ \end{center} 
+
+\begin{center} $ \sum_{e \in T'} (m +1 - c_e) > \sum_{e \in T} (m +1 - c_e)$ \end{center} 
+
+\begin{center} $ \sum_{e \in T'} c'_e > \sum_{e \in T} c'_e$ \end{center} 
+
+Entonces T no es bosque de peso máximo de G con costos $c'$. Absurdo. Luego, $T$ es un árbol de peso mínimo en $G$ con costos $c$. 
+
+\begin{flushright}
+$\therefore \  h \circ g \circ f$ resuelve el problema del árbol recubridor de costo mínimo para (G,c).\\
+
+
+\end{flushright}
+
+\subsection{Apartado C}
+Sea $G=(V,E)$ grafo; definimos $S=E$, $I=\{ F \subseteq S \ | \ F $ es  un  bosque de $G \}$. Veamos que es matroide:
+
+\begin{enumerate}
+\item $\emptyset \in F$ pues es un bosque (no posee ciclos).
+\item Sea $F_1 \in I$ y $F_2 \subseteq F_1$. Como $F_1$ es un bosque, no posee ciclos. Luego, cualquier subconjunto de aristas de $F_1$ no podrá poseer ciclos. Entonces, $F_2 \in I$.
+\item Sean $F_1, F_2 \in I$ tales que $|F_1| < |F_2|$.  Si hay un arista $e \in F_2 - F_1$ que conecta dos componentes diferentes de $F_1$, entonces $F_1 \cup \{ e \} \in I$. 
+\par Supongamos que no existe ningún arista $e \in F_2 - F_1$ conectando dos componentes distintas de $F_1$. Es decir, para toda arista $e \in F_2 - F_1$, ambos extremos están en la misma componente de $F_1$. 
+\par Sea $k_1$ el número de componentes conexas de $F_1$. Entonces, el número de componentes conexas $k_2$ de $F_2$, verificará $k_2 \geq k_1$.
+\par Entonces $|F_1| = |V| - k_1 \geq |V| - k_2 = |F_2|$. Absurdo.
+
+
+\end{enumerate}
+\begin{flushright}
+$\therefore \ (S,I)$ es matroide.
+\end{flushright}
+
+\subsection{Apartado D}
+Debo probar que el algoritmo de Kruskal resuelve el Problema del Árbol Generador Mínimo (es decir, el resultado es un árbol recubridor de peso mínimo). No lo voy a resolver utilizando la sugerencia porque no logré llegar al resultado usándola. \\
+
+Sea G el grafo input, c el vector de costos y O el grafo output.
+
+En primer lugar, observemos que el conjunto de aristas de O es un bosque, pues en cada iteración se agrega un arista siempre y cuando no forme ciclos con las anteriores. Entonces el resultado final no tendrá ciclos. \\
+
+Veamos que si el G es conexo, O será un árbol. Supongamos que no es árbol, entonces tomamos dos componentes conexas de O. En el grafo G habrá al menos un arista e conectando vos vértices de estas componentes de O, pues G es conexo. Consideramos, de entre estas aristas e, la de menor peso. Kruskal debería haberla agregado en la iteración que la consideró, pues no generaba ciclos. Absurdo. Luego O es un árbol. \\
+
+Falta ver que es de peso mínimo. Supongamos que no es de peso mínimo. Entonces hay otro árbol recubridor T tal que la sumatoria de sus aristas es de menor costo. Recordemos que tanto T como O tienen la misma cantidad de aristas pues son árboles recubridores. Sean: \\
+
+\begin{center}
+$o_1, \ o_2 \ ... \ o_p$ las aristas de O ordenadas de menor a mayor costo\\
+$t_1, \ t_2 \ ... \ t_p$ las aristas de T ordenadas de menor a mayor costo
+\end{center}
+
+Sea $k=min_i \ tq \ c_{t_i} < c_{o_i}$. Claramente ese k existe pues T tiene menor peso total que O. Pero entonces, el algoritmo de kruskal hubiera elegido en el paso k al arista $t_k$ en vez del arista $o_k$. Absurdo.
+
+Luego el árbol hallado es de peso mínimo. 
+
+\section{Ejercicio 10}
+Sea $G=(V,E), \ c$ vector de costos y $a \in V$ tal que para todo $v \in V$ hay un $av$ camino dirigido. Voy a probar el contrarecíproco:
+
+\begin{center}
+Hay un ciclo de costo total negativo $\Leftrightarrow \ \exists \ v \in V$, no hay un camino dirigido $av$ de costo mínimo.
+\end{center}
+
+$\Rightarrow)$ Supongamos que hay un ciclo de costo total negativo $-|k|$ y sea $c$ un vértice perteneciente a este ciclo. Supongamos que hay un ac-camino dirigido de costo mínimo n. Entonces, podemos armar un ac camino dirigido utilizando ese camino ac y luego dando una vuelta al ciclo c-c. Este nuevo camino dirigido ac tendrá costo $n-|k| < n$. Absurdo pues el costo mínimo era n. Por lo tanto, no hay ac-camino de costo mínimo para $c$.
+
+$\Leftarrow)$ Supongamos que  para un vértice v, no hay un camino dirigido av de costo mínimo. Esto es, para todo $k \in \mathbb{R}$, hay un camino av de costo menor a k.
+\par Sabemos que la cantidad de caminos sin ciclos de a hacia v es finita. Sea c el mínimo costo de estos caminos sin ciclos desde a hacia v. Por hipótesis habrá un camino de costo menor a c. 
+\par La única forma de que exista es que contenga algún ciclo. Si todos los ciclos que contiene son no negativos, entonces el costo del camino no sería menor a c. Luego tiene algún ciclo de costo negativo.
+
+
+\section{Ejercicio 11} Asumo que no hay ciclos negativos (y que hay siempre un camino aw).
+\subsection{Apartado A}
+
+Sea un aw-camino dirigido con n vértices:
+
+\begin{center}
+$v_1 \ v_2 \ ... \ v_n$,  $v_1=a$, $v_n = w$.
+\end{center}
+
+Veamos, por inducción, lo siguiente:\\
+
+P(k): $k \leq n \ \Rightarrow \ L(v_k) \leq c(v_1 \ ... \ v_k)$ (El coste del camino hasta $v_k$)\\
+
+\par \underline{Caso base}: P(1). $L(v_1)=L(a) = 0$ por hipótesis, y 0 es igual al costo de un camino vacío.
+\par \underline{Paso recursivo}: Supongo que vale $P(k-1)$:
+
+\begin{center}
+ $L(v_{k-1}) \leq c(v_1 \ ...  \ v_{k-1})$,
+\end{center}
+ ¿$L(v_k) \leq c(v_1 \ ... v_{k-1} \ v_k)$? \\
+
+
+Tenemos un arista $e=v_{k-1} v_k$ de costo $c_e$. Por ser L potencial factible, tenemos que:
+
+\begin{center}
+$ L(v_k) \leq L(v_{k-1}) + c_e $
+\end{center}
+ 
+Uniendo estas dos desigualdades:
+
+
+\begin{center}
+$ L(v_k) \leq c(v_1 \ ...  \ v_{k-1})  + c_e = c(v_1 \ ... \ v_{k-1}) $
+\end{center}
+
+Luego vale P(k) para todo k. En particular vale para k=n, y resulta:
+
+\begin{center}
+$L(w) = L(v_n) \leq c( v_1 \ ... \ v_n) = c(P_w)$ con $P_w$ un aw-camino arbitrario.
+\end{center}
+
+\subsection{Apartado B}
+Sea $P_w$ un camino de costo $L(w)$. Sea $P_w'$ un aw-camino. Sabemos por el apartado anterior que $L(w) \leq c(P_w')$. Es decir, $c(P_w) \leq c(P_w')$. Luego $P_w$ es camino de costo mínimo.
+
+\section{Ejercicio 13}
+\subsection{Apartado A}
+El algoritmo siempre termina porque:
+
+\begin{enumerate}
+\item Cada iteración siempre termina (recorrer todas las aristas, que son finitas)
+\item La cantidad máxima de iteraciones está limitada a 20.
+\end{enumerate}
+
+Luego, en una cantidad finita de pasos terminará.
+
+\subsection{Apartado B}
+Si al terminar el algoritmo $hubo\_actualización$ es falso, entonces al seguir iterando no podríamos modificar más las entradas de L.\\
+
+Veamos que, el L resultante en este caso es potencial factible:
+
+\begin{itemize}
+\item En primer lugar, L(a)=0 se cumple en todas las iteraciones.
+\item En segundo lugar, ¿Para toda $vw \ \in \ A$, $L(v) + c_{vw} \geq L(w)$?  Como $hubo\_actualización$ es falso, para todo $vw \in A$,  $L(v) + c(vw) \geq L(w)$ pues nunca se ejecutó en la iteración anterior la modificación de $hubo\_actualización$ en el paso 2.
+\end{itemize}
+Luego, como L es potencial factible y ademas siguiendo el camino av de las etiquetas hallamos un camino con costo exáctamente L(v), por (11.B) resulta ser camino de menor costo.
+
+
+
+\end{document}

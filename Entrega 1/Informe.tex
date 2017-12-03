@@ -1,0 +1,458 @@
+\documentclass {article} 
+
+\usepackage{lmodern}
+\usepackage [spanish] {babel} 
+\usepackage [T1]{fontenc}
+\usepackage [latin1]{inputenc}
+\usepackage{amsthm} % para poder usar newtheorem
+\usepackage{cancel} %Para poder hacer el simbolo "no es consecuencia semántica" etc.
+\usepackage{graphicx} 
+\usepackage{amsmath} %para poder usar mathbb
+\usepackage{amsfonts} %sigo intentando usar mathbb
+\usepackage{amssymb} %therefore
+\usepackage{ mathabx } %comillas
+\usepackage{ verbatim } 
+\addto\captionsspanish{%
+\def\bibname{Referencias}%
+\def\tablename{Cuadro}%
+}
+
+\theoremstyle{remark}
+\newtheorem{thm}{Teorema}
+\newtheorem{lem}{Lema}[section]
+\newtheorem{cor}{Corolario}[section]
+\newtheorem{deff}{Definición}[section]
+\newtheorem{obs}{Observación}[section]
+\newtheorem{ej}{Ejercicio}[section]
+\newtheorem{ex}{Ejemplo}[section]
+\newtheorem{alg}{Algoritmo}[section]
+\usepackage[latin1]{inputenc} 
+\usepackage{listings}
+\usepackage{verbatim}
+\usepackage{hyperref}
+\usepackage{proof}
+\usepackage{anysize}
+\marginsize{3cm}{3cm}{3cm}{3cm}
+
+
+
+\begin{document} 
+
+
+
+\begin{titlepage}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
+
+\center % Center everything on the page
+ 
+%----------------------------------------------------------------------------------------
+%	HEADING SECTIONS
+%----------------------------------------------------------------------------------------
+
+\textsc{\Large Facultad de Ciencias Exactas, Ingeniería y Agrimensura}\\[1.5cm] % Name of your university/college
+
+\textsc{ Tópicos Avanzados en Optimización Combinatoria y Teoría de Grafos}\\[0.5cm] % Minor heading such as course title
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\HRule \\[0.4cm]
+{ \huge \bfseries PRÁCTICA 1: TEORÍA DE GRAFOS}\\[0.4cm] % Title of your document
+\HRule \\[1.5cm]
+ 
+%----------------------------------------------------------------------------------------
+%	AUTHOR SECTION
+%----------------------------------------------------------------------------------------
+
+%\begin{minipage}{0.4\textwidth}
+%\begin{flushleft} \large
+%\emph{Autor:}\\
+%Rodríguez Jeremías % Your name
+%\end{flushleft}
+%\end{minipage}
+
+%\begin{minipage}{0.4\textwidth}
+%\begin{flushright} \large
+%\emph{Profesor:} \\
+%Mauro Jaskelioff % Supervisor's Name
+%\end{flushright}
+%\end{minipage}\\[4cm]
+
+% If you don't want a supervisor, uncomment the two lines below and remove the section above
+\Large \emph{Rodríguez Jeremías}\\
+
+
+%----------------------------------------------------------------------------------------
+%	DATE SECTION
+%----------------------------------------------------------------------------------------
+
+{\large \today}\\[3cm] % Date, change the \today to a set date if you want to be precise
+
+%----------------------------------------------------------------------------------------
+%	LOGO SECTION
+%----------------------------------------------------------------------------------------
+
+%\includegraphics{Logo}\\[1cm] % Include a department/university logo - this will require the graphicx package
+ 
+%----------------------------------------------------------------------------------------
+
+\vfill % Fill the rest of the page with whitespace
+
+\end{titlepage}
+
+
+\section{Ejercicio 6}
+\subsection{Apartado A}
+Observemos que $G_n=(V_n \cup W_n, E_n)$, $V_n \cap \  W_n = \emptyset$,  donde:
+
+\begin{eqnarray}
+\nonumber &V_n &= \{v_1,v_2, ... , v_n \} \\ 
+\nonumber &W_n &= \{w_1,w_2, ... , w_n \} \\
+\nonumber &E_n &= \{  v_i w_i \ | \ i \in \{1,...,n\} \ \} 
+\end{eqnarray}
+
+Cláramente todo conjunto estable de $G_n$ podrá contener a lo sumo a uno de entre $v_i$ y $w_i$, fijado un $i \in \{1,..,n\}$. Luego si S es estable, $|S|\leq n$.\\
+
+\underline{Lema:} Sea $S$ estable en $G_n$. Entonces:
+
+\begin{center} $S$ estable maximal de $G_n \Leftrightarrow \ |S|=n$ \end{center}
+
+d/ \\
+$\Rightarrow)$ Supongamos que $|S|=m<n$. Entonces, $\exists \ i \ \in \{1,...,n\} \ | \ v_i \notin S \ \wedge w_i \notin S$\\
+Consideremos $S \cup \{ v_i \} $. Es estable pues S es estable y $w_i \notin S$. Luego S no es maximal. Absurdo.
+\begin{flushright} $\therefore |S|=n $ \end{flushright}
+$\Leftarrow)$ Supongamos que S no es maximal. Entonces $\exists \ S' \subseteq W_n \cup V_n \ | \ S \subset S'$ y $S'$ es estable. Luego $S'$ es estable con $|S'|>n$. Luego $\exists \  i \in \{1,...,n\} \ v_i \in S' \wedge w_i \in S'$. Luego $S'$ no es estable pues estos últimos vértices son vecinos.\\
+ \begin{flushright} $\therefore \ S$ maximal  \end{flushright} 
+
+Como consecuencia de este lema, hay tantos conjuntos estables maximales en $G_n$ como conjuntos estables de cardinalidad $n$.\\
+
+Veamos, usando inducción matemática, que en $G_n$ hay $2^n$ de estos conjuntos:\\
+\begin{center}
+P(n):  $|\{ S \subseteq V_n \cup W_n \ | \ |S|=n \ \wedge \ S$ estable en $G_n \}| = 2^n $
+\end{center}
+\par El caso base es con $G_1 = K_1$, donde cláramente hay $2 = 2^1$ estables.\\
+\par En el caso de $G_{n+1}$, observemos que un estable maximal será la unión entre un estable de $G_n$ y exáctamente uno entre $\{ v_{n+1} \}$ y $\{ w_{n+1} \}$. \\
+\par Por hipótesis inductiva hay $2^n$ conjuntos estables en $G_n$. Luego por regla del producto habrá 
+$2^n * 2=2^{n+1}$ formas de combinar uno de los estables de $G_n$ con exáctamente uno entre $v_{n+1}$ y $w_{n+1}$. \\
+\par Entonces, por inducción matemática vale $P(n)$ $\forall n$
+
+ \begin{flushright} $\therefore$ Hay $2^n$ estables de cardinal máximo en $G_n$ \end{flushright}
+\subsection{Apartado B} Deseamos encontrar grafos con una cantidad exponencial de cliques maximales respecto al número de vertices.
+
+
+\underline{Lema:} Sea $G=(V,E)$ grafo, y sea $S \subseteq V$ 
+\begin{center}
+$S$ es estable maximal en $G$ $\Leftrightarrow$ $S$ es clique maximal en $\bar{G}$
+\end{center}
+
+d/ Solo demuestro el implica, la vuelta es análoga. \\
+$\Rightarrow) $ \\ Veamos primero que es clique y luego que es maximal.\\
+
+S estable en G $\Leftrightarrow \forall \ u, v \in S \ , \{u,v \} \notin E(G).$  $\Leftrightarrow  \forall \ u, v \in S \, \{u,v \} \in \bar{G} \Leftrightarrow$  $S$ es clique en $\bar{G}$\\
+
+Supongamos que $S$ no es clique maximal en $\bar{G}$ $\Rightarrow \ \exists \ S' \ : \ S \subset S' \ \wedge \ S'$ clique en $\bar{G}$ $\Rightarrow \exists \ S' \ : \ S \subset S' \ \wedge \ S'$ estable en G . Absurdo pues S es estable maximal. 
+
+\begin{flushright} $\therefore$ S es clique maximal en $\bar{G}$. \end{flushright} 
+
+Usando este lema, sabemos que hay una correspondencia entre cliques maximales de $\bar{G}$ y estables maximales de G.\\
+\par Consideramos el grafo $G_n$ que estudiamos en la sección anterior, tiene una cantidad exponencial de estables maximales. Luego $\bar{G_n}$ tendrá una cantidad exponencial de cliques maximales respecto al número de vértices.
+
+\section{Ejercicio 12}
+Sea $G$ un grafo con $n=|V(G)|$. Fijado un vértice en $G$, este puede dominar a lo sumo $\Delta(G) +1$ vértices.\\
+\par Luego, para dominar todos los vértices de $G$, necesitaremos al menos $\frac{n}{\Delta(G)+1}$ vértices: \\
+\begin{center}
+$ \gamma(G) \geq \frac{n}{\Delta(G)+1}$
+\end{center}
+\par Es decir:
+\begin{center}
+$ \gamma(G)(\Delta(G)+1) \geq n$
+\end{center}
+
+\par Dado un $k$ natural, un ejemplo (poco elegante) de que esta cota es tan mala como queramos es el grafo no conexo $G_k$ cuyas componentes conexas son:
+
+\begin{itemize}
+\item Un grafo completo $K_k$. 
+\item $k-1$ vértices aislados.
+\end{itemize}
+
+Luego:
+ \begin{eqnarray}
+ \nonumber &n &= k-1 + k = 2k - 1 \\
+ \nonumber &\Delta(G_k) &= k-1\\
+ \nonumber &\gamma(G_k)& = k
+ \end{eqnarray}
+
+Luego, para $k \geq 3$ se puede probar por inducción matemática que:
+
+\begin{center}
+$\gamma(G_k) (\Delta(G_k)+1) = k^2 \geq 3k -1 =  2k-1 + k = n + k$ 
+\end{center}
+
+
+
+
+\section{Ejercicio 13}
+\subsection{Apartado A} 
+\underline{CASO NO TOTAL}
+
+Sea G un grafo, y sea D=$\{v_1,v_2, \ldots , v_n\}$ un conjunto dominante mínimo de G. Consideremos la secuencia S=$\left\langle v_1,v_2, \ldots , v_n\right\rangle$. Veamos que S es una secuencia legal en G: \\
+
+\par Supongamos que S no es secuencia legal. Entonces:
+
+\begin{center}
+$\exists \ i \in \{2, \ldots, n\} \ : \ N[v_i] - \bigcup_{j=1}^{i-1} N[v_j] = \emptyset $
+\end{center} 
+
+\par Entonces, el conjunto $D - \{v_i\}$ también es conjunto dominante, pues todo elemento de $N[v_i]$ está en la vecindad de algun otro elemento $v_k,\ k<i$. 
+\par Entonces, D no es mínimo. Absurdo.
+\begin{flushright}
+$\therefore$ S es secuencia legal.
+\end{flushright}
+
+\underline{CASO TOTAL}
+
+Sea G un grafo, y sea D=$\{v_1,v_2, \ldots , v_n\}$ un conjunto dominante total mínimo de G. Consideremos la secuencia S=$\left\langle v_1,v_2, \ldots , v_n\right\rangle$. Veamos que S es una secuencia legal total en G: \\
+
+\par Supongamos que S no es secuencia legal. Entonces:
+
+\begin{center}
+$\exists \ i \in \{2, \ldots, n\} \ : \ N(v_i) - \bigcup_{j=1}^{i-1} N(v_j) = \emptyset $
+\end{center} 
+
+\par Entonces, el conjunto $D - \{v_i\}$ también es conjunto dominante total, pues todo elemento de $N(V_i)$ está en la vecindad de algun otro elemento $v_k,\ k<i$. 
+\par Entonces, D no es mínimo. Absurdo.
+\begin{flushright}
+$\therefore$ S es secuencia legal total.
+\end{flushright}
+
+\underline{Obs}: Como los conjuntos no tienen orden, se desprende que cualquier ordenación de D que hagamos, vista como secuencia, será legal (total) en G.
+
+\subsection{Apartado B}
+
+\underline{CASO NO TOTAL}
+
+Sea S=$\left\langle v_1,v_2, \ldots , v_n\right\rangle$ secuencia legal de máxima longitud, y sea \^{S}$=\{v_1,v_2, \ldots , v_n\}$. Veamos que \^{S} es conjunto dominante de G:\\
+
+Supongamos que \^{S} no es dominante en G. Entonces:
+
+\begin{center}
+$\exists \ v \in V \ : \ v \notin \bigcup_{i=1}^{n} N[v_i] $
+\end{center}
+
+Entones, $\left\langle v_1,v_2, \ldots , v_n,v\right\rangle$ Es secuencia legal. Luego S no es secuencia de legal de longitud máxima. Absurdo.
+
+\begin{flushright}
+$\therefore$ \^{S} es dominante.
+\end{flushright}
+
+\underline{CASO TOTAL} (Asumo que no hay vértices aislados)
+
+Sea S=$\left\langle v_1,v_2, \ldots , v_n\right\rangle$ secuencia de legal total de máxima longitud, y sea \^{S}$=\{v_1,v_2, \ldots , v_n\}$. Veamos que \^{S} es conjunto dominante total de G:\\
+
+Supongamos que \^{S} no es dominante en G. Entonces:
+
+\begin{center}
+$\exists \ v \in V \ : \ v \notin \bigcup_{i=1}^{n} N(v_i) $
+\end{center}
+
+Entones, $\left\langle v_1,v_2, \ldots , v_n, z\right\rangle$ Es secuencia de legal total, donde $z \in N(v)$. Luego S no es secuencia legal total de longitud máxima. Absurdo.
+
+\begin{flushright}
+$\therefore$ \^{S} es dominante total.
+\end{flushright}
+
+\subsection{Apartado C}
+\underline{CASO NO TOTAL}
+
+Sean $u$ y $v$ vértices mellizos verdaderos en G. Deseamos probar que $\gamma_{gr}(G) = \gamma_{gr}(G-v)$.\\
+
+\par Hagamos algunas observaciones previas:
+
+\begin{itemize}
+\item Como $N_G[u]=N_G[v]$, $u$ y $v$ son adyacentes.
+\item Si S es una secuencia legal en $G-v$, entonces S también es una secuencia legal en G.
+\item En una secuencia legal en G, no pueden estar $u$ y $v$ a la vez. (Si está primero $u$, luego agregar a $v$ en la secuencia no cubriría vértices nuevos y viceversa)
+\end{itemize}
+
+
+
+Sea S=$\left\langle v_1,v_2, \ldots , v_n\right\rangle$ una secuencia legal en G de longitud máxima ( n=$\gamma_{gr}(G)$)\\
+
+
+Supongamos $\gamma_{gr}(G) < \gamma_{gr}(G-v)$ entonces habría una secuencia legal en G-v de longitud mayor a n. Esa secuencia también será legal en G, luego  $\gamma_{gr}(G) >n$, absurdo. Luego, sabemos que vale:  \\
+\begin{center}
+$\gamma_{gr}(G) \geq \gamma_{gr}(G-v)$
+\end{center}
+Para probar que $\gamma_{gr}(G) = \gamma_{gr}(G-v)$, es suficiente hallar una secuencia legal $S'$ en G-v tal que  $|S'|=n$. Para hallar esta secuencia $S'$, analizaré dos casos:\\
+
+
+
+
+
+
+
+
+\underline{Subcaso 1}: S no contiene al vértice v \\
+\par Propongo $S'$=S. Está claro que S es secuencia de vértices de G-v, y que su longitud es n. Solo resta probar que $S$ es legal en $G-v$. Supongamos que no lo es. Entonces:
+
+\begin{center}
+$\exists \ i \in \{2, ... , n\} \ : \ N_{G-v}[v_i] - \bigcup_{j=0}^n N_{G-v}[v_j] = \emptyset $
+\end{center}
+Además, como S es secuencia legal en G, sabemos que:
+\begin{center}
+$  N_{G}[v_i] - \bigcup_{j=0}^n N_{G}[v_j] \neq \emptyset $
+\end{center}
+Como $N_{G-v}[x] \subseteq N_G[x] \ \forall x$, la única forma de que la primera resta sea vacía y la segunda no vacía, es que:
+\begin{center}
+$N_{G-v}[v_i] \subset N_G[v_i]$ (estricto)
+\end{center}
+Es decir,
+\begin{center}
+$N_{G-v}[v_i] = N_G[v_i]-\{v \}$
+\end{center}
+Luego
+\begin{center}
+$  N_{G}[v_i] - \bigcup_{j=0}^n N_{G}[v_j] = \{ v \} $.
+\end{center}  
+
+Pero esto es absurdo, pues v y u son mellizos verdaderos, y esa resta no puede tener sólo a v:
+\begin{center}
+$ v \in (N_{G}[v_i] - \bigcup_{j=0}^n N_{G}[v_j]) \Leftrightarrow u \in (N_{G}[v_i] - \bigcup_{j=0}^n N_{G}[v_j])$
+\end{center}
+
+\begin{flushright}
+$\therefore S'$ es secuencia 
+\end{flushright}
+
+
+
+
+\underline{Subcaso 2}: S contiene al vértice $v_i=v$ (consecuentemente no contiene a $u$)\\
+\par Entonces formamos la secuencia S'=$\left\langle v_1, \ldots , v_{i-1},u,v_{i+1}, \ldots, v_n\right\rangle$. Como $u$ y $v$ son mellizos verdaderos, S' también será secuencia legal de longitud máxima en G. Además, S' es secuencia en G-v. \\
+\par Para ver que es legal, con un razonamiento análogo al caso 1, la única forma de que no sea legal es que en el vértice $v_k$, la resta de vacía en G-v y no en G.\\
+\par Esto nuevamente es absurdo, porque u y v son mellizos verdaderos y la resta no puede ser vacía ya que el vértice u debe pertenecer.
+\begin{flushright}
+$\therefore S'$ es secuencia 
+\end{flushright}
+
+
+\begin{flushright}
+$\therefore$ $\gamma_{gr}(G) = \gamma_{gr}(G-v)$.
+\end{flushright}
+
+
+
+\underline{CASO TOTAL}
+
+En este caso, si $u$ y $v$ son mellizos falsos (i.e. $N(u)=N(v)$), propongo la siguiente igualdad:\\ 
+
+\begin{center}
+$\gamma_{gr}^t(G) = \gamma_{gr}^t(G-v)$
+\end{center}
+
+Para probar esto razonaré análogamente. 
+
+Sea $n = \gamma_{gr}^t(G)$. Es decir, n el máximo de las longitudes de secuencias legales totales en G.\\
+
+Sabemos que $ n \geq \gamma_{gr}^t(G-v)$. Luego, si encontramos una secuencia legal total en $G-v$ de longitud $n$, resultará válida la igualdad que propongo.\\
+
+Tomo una secuencia legal total en $G$,  $S =\left\langle s_1,s_2, \ldots , s_n\right\rangle$ \\
+
+\underline{Subcaso 1}: $v$ no está en S. Razonamos análogamente al caso no total, viendo que $S$ es una secuencia
+legal total en G-v:  Supongamos que no lo es, entonces en el elemento $s_i$ resulta: \\
+
+\begin{center}
+ $N_{G-v}(s_i) - \cup_{j=1}^i N_{G-v}(s_j) = \emptyset$
+\end{center}
+
+Dado que $S$ secuencia legal total en $G$, esta diferencia no es vacía en $G$. La única forma de que también sea vacía en $G-v$ es $v \in N_G(s_i)$, y más aún: ($ \{ v \} = N_G(s_i)$).\\
+Pero esto es absurdo, pues $u$ y $v$ son mellizos falsos, y en ese paso debían ser agregados los dos o ninguno. Luego $S$ es secuencia en $G-v$.\\
+
+\underline{Subcaso 2}: $u$ y $v$ están en la secuencia. Esto nunca puede suceder pues si en un paso se agrega la vecindad de $u$, agregar en otro paso la vecindad de $v$ no sumará nuevos vértices cubiertos.
+
+\underline{Subcaso 3}: $v$ está en la secuencia.  Lo reemplazamos por $u$ y verificamos que es secuencia legal, de forma análoga al caso total.
+
+\begin{flushright}
+$\therefore \gamma_{gr}^t(G) = \gamma_{gr}^t(G-v)$
+\end{flushright}
+
+
+
+\section{Ejercicio 17} Consideremos $G \square H$ producto escalar de G y H. Asumo que G y H son grafos simples, sin bucles y no vacíos.
+\subsection{Apartado A} 
+Como $V(H) \neq \emptyset$, tomemos $h \in V(H)$ y consideremos:
+\begin{center}
+$C= V(G) \times \{h\} \subseteq G \square H$
+\end{center} 
+El subgrafo inducido por $C$ en $G \square H$ es:
+\begin{center}
+$G'= (C,E')$
+\end{center}
+Donde $E'$ son las aristas de $G\square H$ tales que sus extremos están en $V(G) \times \{h\}$. Por definición de arista de $G\square H$ esto se reduce a: 
+\begin{center}
+$E'= \{ g_1 h \ g_2 h \ | \ g_1 \ g_2 \ \in E(G)\}$
+\end{center} 
+Luego, considerando el subgrafo inducido $G'$ en $G \square H$, probaré que $ G' \cong G$. Sea la siguiente función:
+
+
+\begin{eqnarray}
+\nonumber f : G &\mapsto& G' \\
+\nonumber f(g) &=& (g,h)
+\end{eqnarray}
+
+Es cláramente inyectiva ($(g_1 ,h)=(g_2 ,h) \Rightarrow g_1=g_2$) y sobreyectiva (Dado $y=(g,h)\in Cod(f)$, $y=f(g)$). \\
+Además cláramente $ g_1h \ g_2h \ \in E' \ \Leftrightarrow \ g_1 \ g_2 \ \in E(G)$, por definición de $E'$.
+\begin{flushright}
+$\therefore  G' \cong G$
+\end{flushright}
+Análogamente definimos $H'$ como el subgrafo inducido por $\{g\} \times V(H)$ para algún $g \in V(G)$.
+\begin{flushright}
+$\therefore  H' \cong H$
+\end{flushright}
+
+\subsection{Apartado B}
+Sean $\chi(G)$ y $\chi(H)$ los números de coloreo de G y H respectivamente. Por el apartado anterior, $\chi(G)=\chi(G')$ y $\chi(H)=\chi(H')$. Consecuentemente, al ser $H'$ y $G'$ subgrafos de $G \square H$ tenemos que:
+
+\begin{center}
+$\chi(G \square H) \geq \chi(G)$ \\ $\chi(G \square H) \geq \chi(H)$  
+\end{center} 
+ \par Entonces, tomando m = máx$ \{\chi(G),\chi(H)\}$  tenemos que: 
+\begin{center}
+$\chi(G \square H) \geq$ m 
+\end{center}
+
+
+Para probar la igualdad, es suficiente con hallar un m-coloreo de $G \square H$.\par Sean $c_G : V(G) \mapsto \{1, ... , \chi(G) \}$ y $c_H : V(H) \mapsto \{1, ... , \chi(H) \}$ dos coloreos de G y H. Definimos la siguiente función: 
+\begin{eqnarray}
+\nonumber f : V(G\square H) &\mapsto& \{1,...,m \} \\
+\nonumber f (g,h)&=&c_G(g) +_{mod_m} c_H(h) 
+\end{eqnarray}
+
+Para ver que es un coloreo consideremos dos vértices adyacentes en $G\square H$. \\
+\par \underline{Caso 1}: $g_1h \ g_2 h \ \in \ E(G\square H)$. Supongamos que ambos extremos están igualmente coloreados:\\
+\begin{eqnarray}
+\nonumber c(g_1h) = c(g_2 h) &\Rightarrow & \\
+\nonumber c_G(g_1)+c_H(h) = c_G(g_2) + c_H(h) &\Rightarrow &\\
+\nonumber c_G(g_1) = c_G(g_2)&&
+\end{eqnarray}
+
+Lo cual es absurdo pues $c_G$ es un coloreo y $g_1 \ g_2 \in E(G)$. 
+
+\underline{Caso 2}: $gh_1 \ g h_2 \ \in \ E(G\square H)$. Supongamos que ambos extremos están igualmente coloreados:\\
+\begin{eqnarray}
+\nonumber c(gh_1) = c(g h_2) &\Rightarrow & \\
+\nonumber c_G(g)+c_H(h_1) = c_G(g) + c_H(h_2) &\Rightarrow &\\
+\nonumber c_G(h_1) = c_G(h_2)&&
+\end{eqnarray}
+
+Lo cual es absurdo pues $c_H$ es un coloreo y $h_1 \ h_2 \in E(H)$.\\
+
+\begin{flushright}
+$\therefore$ f es un m-coloreo y $\chi(G \square H) =$ m 
+\end{flushright} 
+
+
+
+\end{document}
